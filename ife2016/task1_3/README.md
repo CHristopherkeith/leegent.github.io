@@ -4,5 +4,5 @@
 - 解决方案1：删去中列div，将article直接拿来布局，则可绕过此问题。
 - 揭开真相：最终发现是由于article内的第一个元素——p元素的默认margin-top和margin-bottom属性导致的。
 
-  p的margin-top理论上应使p内的文字相对于article上沿下移，但由于margin叠加原理（margin相遇取其大者），article的0 margin事实上被替换为了p的margin值，故其上沿相对div下移相应的距离，p随之下移后不再动。下沿同理。
+  p的margin-top理论上应使p内的文字相对于article上沿下移，但由于block元素之间的margin叠加原理（margin相遇取其大者），article的0 margin事实上被替换为了p的margin值，故其上沿相对div下移相应的距离，p随之下移后不再动。下沿同理。
   

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定位和居中问题</title>
+    <style type="text/css">
+        .circle{
+            position: absolute;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: #fc0;
+        }
+        .bigshelter{
+            width: 100px;
+            height: 50px;
+            background-color: #ffffff;
+        }
+        .smallshelter {
+            width: 50px;
+            height: 50px;
+            background-color: #ffffff;
+        }
+        .bottomright-circle>.smallshelter {
+            float: right;
+        }
+        .bottomright-circle>.bigshelter{
+            clear: both;
+        }
+        /* 实现水平和垂直居中 */
+        #main{
+            position: relative;
+            left: 50%;
+            margin-left: -200px;
+            width: 400px;
+            min-width: 400px;
+            height: 200px;
+            background-color: #cccccc;
+        }
+        /* 把扇形定位到角处 */
+        .topleft-circle{
+            left: -50px;
+            top:-50px;
+        }
+        .bottomright-circle{
+            right: -50px;
+            bottom: -50px;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="topleft-circle circle">
+        <div class="bigshelter"></div>
+        <div class="smallshelter"></div>
+    </div>
+    <div class="bottomright-circle circle">
+        <div class="smallshelter"></div>
+        <div class="bigshelter"></div>
+    </div>
+</div>
+</body>
+</html>
