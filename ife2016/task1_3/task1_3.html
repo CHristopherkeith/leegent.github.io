@@ -12,8 +12,23 @@
             background-color: #eee;
             padding: 20px;
             border: 1px solid;
+            /*
+             * 常用的清除浮动方法：overflow
             overflow: auto;
+             */
             min-width: 500px;
+        }
+        /* clearfix技术：使用伪类来清除浮动 */
+        #bg:before,#bg:after{
+            content: "";
+            display: table;
+        }
+        #bg:after{
+            clear: both;
+        }
+        /* 兼容IE6、7 */
+        #bg{
+            *zoom: 1;
         }
         #header{
             position: absolute;
