@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task1_3 三栏布局</title>
+    <style type="text/css">
+        p{
+            text-indent: 2em;
+            line-height:1.5em;
+        }
+        #bg{
+            background-color: #eee;
+            padding: 20px;
+            border: 1px solid;
+            overflow: auto;
+            min-width: 500px;
+        }
+        #header{
+            position: absolute;
+            padding: 20px;
+            width: 158px;
+            background-color: #fff;
+            border: 1px solid;
+        }
+        #teamLogo{
+            float: left;
+            width: 80px;
+            height: 80px;
+        }
+        #teamName{
+            font-size: large;
+        }
+        #introContainer{
+            border: 1px solid;
+            padding: 0 20px 0 20px;
+            margin-left: 220px;
+            margin-right: 140px;
+            background-color: #ffffff;
+        }
+        #introduction{
+            background-color: #ffffff;
+        }
+        #teamMembers{
+            float: right;
+            width: 78px;
+            padding: 20px 20px 0 20px;
+            border: 1px solid;
+            background-color: #fff;
+        }
+        #teamMembers>img{
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="bg">
+    <div id="header">
+        <img id="teamLogo" src="images/group.jpg">
+        <span id="teamName">进击的前端菜鸟</span>
+    </div>
+    <div id="teamMembers">
+        <img src="images/DF.jpeg">
+        <img src="images/LXB.jpeg">
+        <img src="images/LZT.jpeg">
+        <img src="images/ZF.jpeg">
+        <img src="images/ZK.jpeg">
+    </div>
+    <div id="introContainer">
+        <article id="introduction">
+        <p>我们是<strong>进击的前端菜鸟</strong></p>
+        <p>五个原本素不相识的年轻人，因为对前端共同的热爱而走到了一起。团队成员都是在校学生，来自五湖四海大江南北，大多数人技术刚刚起步，就像正在努力学习飞行的菜鸟，但我们相信，只要勤奋刻苦、
+            认真踏实地去学习、实践、总结，就能不断获得提升，菜鸟终将迎来翱翔苍穹的那一天！</p>
+        <p>很高兴来到百度前端技术学院和大家一起学习进步，望各位同学不吝指教~</p>
+        <h3>重要说明</h3>
+        <blockquote>百度前端技术学院的课程任务是由百度前端工程师专为对前端不同掌握程度的同学设计。我们尽力保证课程内容的质量以及学习难度的合理性，但即使如此，真正决定课程效果的，
+            还是你的每一次思考和实践。课程多数题目的解决方案都不是唯一的，这和我们在实际工作中的情况也是一致的。因此，我们的要求不仅仅是实现设计稿的效果，更是要多去思考不同的解决方案，
+            评估不同方案的优劣，然后使用在该场景下最优雅的方式去实现。那些最终没有被我们采纳的方案，同样也可以帮助我们学到很多知识。所以，我们列出的参考资料未必是实现需求所必须的。
+            有的时候，实现题目的要求很简单，甚至参考资料里就有，但是背后的思考和亲手去实践却是任务最关键的一部分。在学习这些资料时，要多思考，多提问，多质疑。相信通过和小伙伴们的交流，
+            能让你的学习事半功倍。</blockquote>
+        <p>私以为这段话写的很好啊，不仅是学习前端技术的正确姿势，也是适用于各领域学习的一般方法。因为前端学院，对百度已经路转粉。</p>
+        </article>
+    </div>
+</div>
+</body>
+</html>
