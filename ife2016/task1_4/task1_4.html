@@ -11,6 +11,7 @@
             height: 100px;
             background-color: #fc0;
         }
+        /* 用div元素遮挡 */
         .bigshelter{
             width: 100px;
             height: 50px;
@@ -21,11 +22,33 @@
             height: 50px;
             background-color: #ffffff;
         }
-        .bottomright-circle>.smallshelter {
-            float: right;
+        /* 用伪类创建伪元素实现遮挡 */
+        .bottomright-circle:before{
+            display: block;
+            height: 50px;
+            width: 50px;
+            content: "";
+            background-color: #ffffff;
+            position: absolute;
+            left: 50px;
         }
-        .bottomright-circle>.bigshelter{
-            clear: both;
+        .bottomright-circle:after{
+            display: block;
+            height: 50px;
+            width: 100px;
+            content: "";
+            background-color: #ffffff;
+            position: absolute;
+            top: 50px;
+        }
+        /* 把扇形定位到角处 */
+        .topleft-circle{
+            left: -50px;
+            top:-50px;
+        }
+        .bottomright-circle{
+            right: -50px;
+            bottom: -50px;
         }
         /* 实现水平和垂直居中 */
         #main{
@@ -39,15 +62,6 @@
             height: 200px;
             background-color: #cccccc;
         }
-        /* 把扇形定位到角处 */
-        .topleft-circle{
-            left: -50px;
-            top:-50px;
-        }
-        .bottomright-circle{
-            right: -50px;
-            bottom: -50px;
-        }
     </style>
 </head>
 <body>
@@ -56,10 +70,7 @@
         <div class="bigshelter"></div>
         <div class="smallshelter"></div>
     </div>
-    <div class="bottomright-circle circle">
-        <div class="smallshelter"></div>
-        <div class="bigshelter"></div>
-    </div>
+    <div class="bottomright-circle circle"></div>
 </div>
 </body>
 </html>
