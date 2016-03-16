@@ -1,0 +1,150 @@
+body{
+    margin: 1px;
+    background-color: #eee;
+}
+.container{
+    border: 1px solid darkgray;
+    box-shadow: 1px 1px darkgray;
+    padding: 30px;
+    background-color: #ffffff;
+}
+/* 导航栏 */
+.navigator{
+    position: relative;
+    height: 60px;
+    width: 100%;
+    background-color: darkslategray;
+}
+.logo{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 50px;
+}
+.navigator-list{
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    margin-top: -0.5em;
+    font-size: 16px;
+    font-family: "黑体";
+}
+.navigator-list>li{
+    float: left;
+    margin-left: 2em;
+}
+.navigator-list a:hover{
+    color: gray;
+}
+.navigator-list a{
+    text-decoration: none;
+    color: #ffffff;
+}
+/* 侧栏 */
+.sidebar{
+    float: right;
+    width: 360px;
+    margin: 30px;
+    font-family: "黑体";
+}
+.sidebar h3{
+    padding-left: 10px;
+    border-left: 3px solid lightgray;
+}
+.sidebar div{
+    float: left;
+    line-height: 2em;
+}
+.form-left{
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+.reminder{
+    color: gray;
+    font-size: 13px;
+}
+.form-right textarea{
+    width: 100%;
+    height: 5em;
+    font-size: 15px;
+}
+.submit{
+    width: 100%;
+    background-color: blueviolet;
+    border-radius: 10px;
+    border:none;
+    color: white;
+    font-size: 16px;
+    font-family: "黑体";
+    padding: 10px 0 10px 0;
+}
+/* 主内容 */
+.main-panel{
+    margin-left: 30px;
+    margin-right:460px;
+}
+.main-panel .container{
+    margin: 30px 0 30px 0;
+}
+.container h1{
+    font-size: 30px;
+    font-family: "黑体";
+}
+.container h2{
+    font-size: 20px;
+    font-family: "黑体";
+    color: darkcyan;
+}
+.writer{
+    font-size: 10px;
+    font-family: "黑体";
+    color: darkcyan;
+}
+article p{
+    text-indent: 2em;
+    font-family: "Microsoft YaHei UI";
+    line-height: 1.5em;
+}
+#gallery div{
+    display: inline-block;
+    border: 1px solid;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    font-family: "黑体";
+}
+#article3 ol{
+    font-family: "黑体";
+    line-height: 1.5em;
+}
+#article3 table{
+    width: 100%;
+    font-family: "黑体";
+    font-size: 14px;
+    line-height: 1.5em;
+ }
+#article3 table th{
+    background-color: #000000;
+    text-align: left;
+    color: #ffffff;
+}
+.table-footer{
+    background-color: darkgray;
+}
+/* 页脚 */
+footer{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: #000;
+    text-align: center;
+}
+.copyright{
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5em;
+    font-family: "黑体";
+    color: #ffffff;
+}

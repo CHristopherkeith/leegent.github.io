@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>零基础HTML及CSS编码（二）</title>
+    <link rel="stylesheet" type="text/css" href="task1_5.css">
+</head>
+<body>
+<nav class="navigator">
+    <img class="logo" src="images/BaiduLogo.png" alt="Logo">
+    <ul class="navigator-list">
+        <li><a href="#">导航链接一</a></li>
+        <li><a href="#">导航链接二</a></li>
+        <li><a href="#">导航链接三</a></li>
+        <li><a href="#">导航链接四</a></li>
+    </ul>
+</nav>
+<div class="sidebar container">
+    <h3>这里以后是一个侧栏，这是侧栏的标题</h3>
+    <form id="sidebar-form">
+        <div class="form-left">
+            请输入邮箱地址<br><br>
+            请输入密码<br>
+            请重复输入密码<br><br>
+            性别<br>
+            城市<br>
+            爱好<br>
+            个人描述<br>
+        </div>
+        <div class="form-right">
+        <input type="email" name="email" placeholder="请输入你的邮箱地址"><br>
+        <span class="reminder">邮箱地址请按要求格式输入</span><br>
+        <input type="password" name="password" value="123456789"><br>
+        <input type="password" name="repassword" value="123456789"><br>
+        <span class="reminder">密码请为6-16位英文数字</span><br>
+        <label><input type="radio" name="sex" value="male" checked="checked">男</label>
+        <label><input type="radio" name="sex" value="female">女</label><br>
+        <select name="city">
+            <option value="Beijing">北京</option>
+            <option value="Beijing">上海</option>
+            <option value="Beijing">杭州</option>
+        </select>
+        <br>
+        <label><input type="checkbox" name="sports">运动</label>
+        <label><input type="checkbox" name="arts">艺术</label>
+        <label><input type="checkbox" name="science">科学</label>
+        <br>
+        <textarea name="discription" placeholder="这是一个多行输入框，输入您的个人描述"></textarea>
+        <br>
+        </div>
+        <input class="submit" type="submit" value="确认提交">
+    </form>
+</div>
+<div class="main-panel">
+    <article class="container" id="article1">
+        <h1>文章一级标题</h1>
+        <h2>文章二级标题</h2>
+        <span class="writer">文章作者 文章发表时间</span>
+        <p>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，换行了<br>        这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，换行了<br>这是一个很长很长的段落，这是一个很长很长的段落，<a href="http://ife.baidu.com">这里有一个连接到"http://ife.baidu.com"</a>这是一个很长很长的段落，这是一个很长很长的段落，<b>这里有个粗体字</b>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落。</p>
+        <img src="images/lady.png" alt="此处应有图">
+        <p> 这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落,这是一个很长很长的段落，这是一个很长很长的段落,换行了<br>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，<b>这里有个粗体字</b>这是一个很长很长的段落，这是一个很长很长的段落，<a href="http://ife.baidu.com" target="_blank">这里有一个连接点击后打开新窗口到"http://ife.baidu.com"</a>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落,这是一个很长很长的段落，这是一个很长很长的段落,这是一个很长很长的段落,这是一个很长很长的段落,这是一个很长很长的段落,这是一个很长很长的段落,这是一个很长很长的段落,这是一个很长很长的段落。</p>
+    </article>
+    <article class="container" id="article2">
+        <h1>另一篇文章一级标题</h1>
+        <h2>文章二级标题</h2>
+        <span class="writer">文章作者 文章发表时间</span>
+        <p>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，换行了<br>        这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，换行了<br>这是一个很长很长的段落，这是一个很长很长的段落，<a href="http://ife.baidu.com">这里有一个连接到"http://ife.baidu.com"</a>这是一个很长很长的段落，这是一个很长很长的段落，<b>这里有个粗体字</b>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落。</p>
+        <img src="images/lady.png" alt="此处应有图">
+        <ul>
+            <li>列表项目一</li>
+            <li>列表项目二</li>
+            <li>列表项目三</li>
+        </ul>
+    </article>
+    <div class="container" id="gallery">
+        <h1>图片</h1>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+        <div class="image-container">
+            <p>好看的图片</p>
+            <img src="images/lady.png">
+        </div>
+    </div>
+    <article class="container" id="article3">
+        <h1>最后一篇文章一级标题</h1>
+        <h2>文章二级标题</h2>
+        <span class="writer">文章作者 文章发表时间</span>
+        <ol>
+            <li>排名1</li>
+            <li>排名2</li>
+            <li>排名3</li>
+        </ol>
+        <table>
+            <tr>
+                <th>表头</th>
+                <th>表头</th>
+                <th>表头</th>
+            </tr>
+            <tr>
+                <td>表内容单元格</td>
+                <td>表内容单元格</td>
+                <td><a href="#">操作</a></td>
+            </tr>
+            <tr>
+                <td>表内容单元格</td>
+                <td>表内容单元格</td>
+                <td><a href="#">操作</a></td>
+            </tr>
+            <tr>
+                <td>表内容单元格</td>
+                <td>表内容单元格</td>
+                <td><a href="#">操作</a></td>
+            </tr>
+            <tr>
+                <td>表内容单元格</td>
+                <td>表内容单元格</td>
+                <td><a href="#">操作</a></td>
+            </tr>
+            <tr class="table-footer">
+                <td>总计</td>
+                <td colspan="2">1000</td>
+            </tr>
+        </table>
+    </article>
+</div>
+<footer>
+    <span class="copyright">版权所有©</span>
+</footer>
+</body>
+</html>
