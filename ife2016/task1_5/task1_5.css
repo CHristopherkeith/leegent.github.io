@@ -34,6 +34,9 @@ body{
     float: left;
     margin-left: 2em;
 }
+.navigator-list li:last-of-type a{
+    color: cadetblue;
+}
 .navigator-list a:hover{
     color: gray;
 }
