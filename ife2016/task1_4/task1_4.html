@@ -11,17 +11,6 @@
             height: 100px;
             background-color: #fc0;
         }
-        /* 用div元素遮挡 */
-        .bigshelter{
-            width: 100px;
-            height: 50px;
-            background-color: #ffffff;
-        }
-        .smallshelter {
-            width: 50px;
-            height: 50px;
-            background-color: #ffffff;
-        }
         /* 用伪类创建伪元素实现遮挡 */
         .bottomright-circle:before{
             display: block;
@@ -61,15 +50,14 @@
             min-width: 400px;
             height: 200px;
             background-color: #cccccc;
+            /* 遮挡溢出 */
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 <div id="main">
-    <div class="topleft-circle circle">
-        <div class="bigshelter"></div>
-        <div class="smallshelter"></div>
-    </div>
+    <div class="topleft-circle circle"></div>
     <div class="bottomright-circle circle"></div>
 </div>
 </body>
