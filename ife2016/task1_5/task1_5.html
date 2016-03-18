@@ -17,6 +17,43 @@
         </ul>
     </nav>
 </header>
+<aside class="sidebar container">
+    <h3>这里以后是一个侧栏，这是侧栏的标题</h3>
+    <form id="sidebar-form">
+        <div class="form-left">
+            请输入邮箱地址<br><br>
+            请输入密码<br>
+            请重复输入密码<br><br>
+            性别<br>
+            城市<br>
+            爱好<br>
+            个人描述<br>
+        </div>
+        <div class="form-right">
+            <input type="email" name="email" placeholder="请输入你的邮箱地址"><br>
+            <span class="reminder">邮箱地址请按要求格式输入</span><br>
+            <input type="password" name="password" value="123456789"><br>
+            <input type="password" name="repassword" value="123456789"><br>
+            <span class="reminder">密码请为6-16位英文数字</span><br>
+            <label><input type="radio" name="sex" value="male" checked="checked">男</label>
+            <label><input type="radio" name="sex" value="female">女</label><br>
+            <select name="city">
+                <option value="Wuhan">武汉</option>
+                <option value="Shanghai">上海</option>
+                <option value="Changsha">长沙</option>
+                <option value="Qinhuangdao">秦皇岛</option>
+            </select>
+            <br>
+            <label><input type="checkbox" name="sports">运动</label>
+            <label><input type="checkbox" name="arts">艺术</label>
+            <label><input type="checkbox" name="science">科学</label>
+            <br>
+            <textarea name="discription" placeholder="这是一个多行输入框，输入您的个人描述"></textarea>
+            <br>
+        </div>
+        <input class="submit" type="submit" value="确认提交">
+    </form>
+</aside>
 <div class="main-panel">
     <article class="container" id="article1">
         <h1>文章一级标题</h1>
@@ -123,43 +160,6 @@
         </table>
     </article>
 </div>
-<aside class="sidebar container">
-    <h3>这里以后是一个侧栏，这是侧栏的标题</h3>
-    <form id="sidebar-form">
-        <div class="form-left">
-            请输入邮箱地址<br><br>
-            请输入密码<br>
-            请重复输入密码<br><br>
-            性别<br>
-            城市<br>
-            爱好<br>
-            个人描述<br>
-        </div>
-        <div class="form-right">
-            <input type="email" name="email" placeholder="请输入你的邮箱地址"><br>
-            <span class="reminder">邮箱地址请按要求格式输入</span><br>
-            <input type="password" name="password" value="123456789"><br>
-            <input type="password" name="repassword" value="123456789"><br>
-            <span class="reminder">密码请为6-16位英文数字</span><br>
-            <label><input type="radio" name="sex" value="male" checked="checked">男</label>
-            <label><input type="radio" name="sex" value="female">女</label><br>
-            <select name="city">
-                <option value="Wuhan">武汉</option>
-                <option value="Shanghai">上海</option>
-                <option value="Changsha">长沙</option>
-                <option value="Qinhuangdao">秦皇岛</option>
-            </select>
-            <br>
-            <label><input type="checkbox" name="sports">运动</label>
-            <label><input type="checkbox" name="arts">艺术</label>
-            <label><input type="checkbox" name="science">科学</label>
-            <br>
-            <textarea name="discription" placeholder="这是一个多行输入框，输入您的个人描述"></textarea>
-            <br>
-        </div>
-        <input class="submit" type="submit" value="确认提交">
-    </form>
-</aside>
 <footer>
     <span class="copyright">版权所有©</span>
 </footer>
