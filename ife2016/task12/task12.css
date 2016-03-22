@@ -1,0 +1,77 @@
+.table tr:nth-child(odd){
+    background-color: #dddddd;
+}
+.table tr:nth-child(-n+4){
+    color: red;
+    font-weight: bold;
+}
+.table tr:first-child{
+    color: #ffffff;
+    background-color: #000000;
+}
+input{
+    width: 100px;
+}
+input:focus{
+    width: 200px;
+    border-color: #6898c2;
+    transition:1s ease;
+}
+.carousel{
+    position: relative;
+    width: 300px;
+    height: 150px;
+    overflow: hidden;
+}
+.banner{
+    position: relative;
+    width: 300px;
+    height: 150px;
+    transition: left 1s ease-in-out;
+    -webkit-transition: left 1s ease-in-out;
+    animation: myfirst 2s 1s 1 alternate;
+}
+.banner div{
+    position: absolute;
+    width: 300px;
+    height: 150px;
+}
+.banner div:first-child{
+    background-color: green;
+}
+.banner div:nth-child(2){
+    left: 300px;
+    background-color: blue;
+}
+.banner div:last-child{
+    left: 600px;
+    background-color: red;
+}
+#banner1:target~.banner{
+    left:0;
+}
+#banner2:target~.banner{
+    left:-300px;
+}
+#banner3:target~.banner{
+    left:-600px;
+}
+.choose{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.choose a{
+    display: inline-block;
+    width: 2em;
+    text-decoration: none;
+    text-align: center;
+    color: #ffffff;
+    background-color: rgba(255,255,255,.2);
+    cursor: default;
+}
+@keyframes myfirst {
+    0%  {left:0;}
+    50% {left:-300px;}
+    100% {left:-600px;}
+}
