@@ -1,0 +1,203 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 1266px;
+}
+p{margin: 0;}
+/* 顶栏 */
+.header{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(34,138,191,1);
+}
+.header-logo{
+    position: absolute;
+    left: 50px;
+    top:0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.header-right{
+    position: absolute;
+    right: 90px;
+    top:50%;
+    transform: translateY(-50%);
+}
+.search-bar{
+    float: left;
+    width: 312px;
+    height: 28px;
+    border-radius: 10px;
+    background-color: white;
+}
+.header-logo{
+    clear: left;
+}
+.login-word{
+    color: white;
+    font-family: "黑体";
+    font-size: 12pt;
+}
+/*定宽*/
+.container{
+    width: 1280px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
+/* 侧边栏 */
+.sidebar{
+    float: left;
+    width: 260px;
+    min-height: 1206px;
+    background-color: rgb(42,46,61);
+}
+.sidebar-logo{
+    position: relative;
+}
+.sidebar-logo>img{
+    position: absolute;
+    right: 60%;
+    top:18px;
+}
+.sidebar-logo>span{
+    position: absolute;
+    left:50%;
+    top:35px;
+    color: rgb(226,226,226);
+    font-family: "黑体";
+    font-size: 16pt;
+}
+/*主内容*/
+.title{
+    color: #b7b7b7;
+    font-size: 12px;
+    font-family: "黑体";
+}
+.main-panel {
+    margin-left: 260px;
+    min-height: 1206px;
+    background-color: #eeeeee;
+}
+.main-header{
+    height: 30px;
+    background-color: #ffffff;
+}
+.main-header-text{
+    margin-top: 0;
+    line-height: 30px;
+    margin-left: 30px;
+}
+.word:hover{
+    color: #6898c2;
+}
+.main-content{
+    margin:20px 70px auto 60px;
+}
+/*查询模块*/
+.query-panel{
+    border: 1px solid #ddd;
+    padding:15px 30px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+.query-panel>div{
+    display: inline-block;
+    height: 100%;
+}
+.query-1{
+
+}
+/*日期选取模块*/
+.date-panel{
+    height: 65px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+}
+/*统计模块*/
+.summary-panel{
+    height: 90px;
+    margin-bottom: 12px;
+}
+.summary-panel>p{
+    font-size: 12px;
+    font-family: "Microsoft YaHei UI";
+}
+.turnover{
+    display: inline-block;
+    box-sizing: border-box;
+    border-left: 4px solid;
+    height: 70px;
+    width: 200px;
+    padding: 12px 14px 12px 8px;
+    margin-right: 22px;
+    background-color: #ffffff;
+}
+.turnover-left{
+    float: left;
+}
+.turnover-right{
+    width: 60px;
+    height: 45px;
+    float: right;
+}
+.t1{
+    border-color: rgb(67,178,158);
+}
+.t1>.turnover-right{
+    background-color: rgb(67,178,158);
+}
+.t2{
+    border-color: rgb(56,138,193);
+}
+.t2>.turnover-right{
+    background-color: rgb(56,138,193);
+}
+.t3{
+    border-color: rgb(208,75,54);
+}
+.t3>.turnover-right{
+    background-color: rgb(208,75,54);
+}
+.t4{
+    margin-right: 0;
+    border-color: rgb(226,205,71);
+}
+.t4>.turnover-right{
+    background-color: rgb(226,205,71);
+}
+/*最下面四块*/
+.project{
+    height: 355px;
+    border:1px solid #dddddd;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin-bottom: 8px;
+    background-color: #ffffff;
+}
+.project>header{
+    height: 40px;
+    background-color: #eeeeee;
+}
+/*材料模块*/
+.materials{
+    float: left;
+    width: 530px;
+}
+/*报表模块*/
+.report{
+    float: right;
+    width: 350px;
+}
+/*日历模块*/
+.calendar{
+    float: left;
+    width: 350px;
+}
+/*排行榜模块*/
+.ranking{
+    float: right;
+    width: 530px;
+}

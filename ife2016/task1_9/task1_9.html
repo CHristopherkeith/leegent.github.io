@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用HTML/CSS实现一个复杂页面</title>
+    <link rel="stylesheet" type="text/css" href="task1_9.css">
+</head>
+<body>
+<header class="header">
+    <img class="header-logo" src="images/navLogo.png" alt="Logo">
+    <div class="header-right">
+        <div class="search-bar">
+            <img src="images/searchIcon.png">
+        </div>
+        &nbsp;&nbsp;
+        <img class="login-logo" src="images/login.png" alt="Login">
+        <span class="login-word">登录</span>
+    </div>
+</header>
+<div class="container">
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="images/sidebarCircle.png">
+            <span>ABC123</span>
+        </div>
+    </div>
+    <div class="main-panel">
+        <header class="main-header">
+            <p class="main-header-text title">
+                <span class="word">C站</span>
+                <span>/</span>
+                <span class="word">个人报表</span>
+                <span>/</span>
+                <span class="word">文件一</span>
+                <span>/</span>
+                <span class="word">文档一</span>
+            </p>
+        </header>
+        <div class="main-content">
+            <div class="query-panel title">
+                <div class="query-1">
+                    <span>查询项</span>
+                    <select>
+                        <option>第一项</option>
+                        <option>第二项</option>
+                        <option>第三项</option>
+                    </select>
+                </div>
+                <div class="query-2">
+                    <span>买方<select><option>小A</option></select></span>
+                    <br>
+                    <span>卖方<select><option>小C</option></select></span>
+                </div>
+                <div class="query-3">
+                    <span>日期</span>
+                    <input type="text" value="2016-4-1">
+                    <span>总耗时</span>
+                    <select>
+                        <option>8天</option>
+                    </select>
+                    <br>
+                    <span>人数</span>
+                    <select>
+                        <option>10人</option>
+                    </select>
+                    <span>成交项</span>
+                    <select>
+                        <option>10项</option>
+                    </select>
+                </div>
+                <input class="search-button" type="button" value="搜索">
+            </div>
+            <div class="date-panel"></div>
+            <div class="summary-panel">
+                <p>2016年4月份统计</p>
+                <div class="t1 turnover">
+                    <div class="turnover-left">
+                        133311<br>成交量
+                    </div>
+                    <div class="turnover-right"></div>
+                </div>
+                <div class="t2 turnover">
+                    <div class="turnover-left">
+                        133311<br>成交量
+                    </div>
+                    <div class="turnover-right"></div>
+                </div>
+                <div class="t3 turnover">
+                    <div class="turnover-left">
+                        133311<br>成交量
+                    </div>
+                    <div class="turnover-right"></div>
+                </div>
+                <div class="t4 turnover">
+                    <div class="turnover-left">
+                        133311<br>成交量
+                    </div>
+                    <div class="turnover-right"></div>
+                </div>
+            </div>
+            <div class="materials project">
+                <header>
+                    <span class="title">第一组项目</span>
+                </header>
+            </div>
+            <div class="report project">
+                <header>
+                    <span class="title">第一组项目</span>
+                </header>
+            </div>
+            <div class="calendar project">
+                <header>
+                    <span class="title">日历</span>
+                </header>
+            </div>
+            <div class="ranking project">
+                <header>
+                    <span class="title">汽车行业品牌榜</span>
+                </header>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
