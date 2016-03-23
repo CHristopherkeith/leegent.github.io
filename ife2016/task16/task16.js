@@ -69,6 +69,10 @@ function addBtnHandle() {
 function delBtnHandle(e) {
     //事件代理
     var target= e.target|| e.srcElement;
+    if(target.tagName!="BUTTON"){
+        console.log(target.tagName);
+        return;
+    }
     var city=target.parentNode.parentNode.firstChild.innerHTML;
     delete aqiData[city];
     renderAqiList();
