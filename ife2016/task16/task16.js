@@ -46,7 +46,7 @@ function renderAqiList() {
         newRow.appendChild(newCol2);
         var newCol3=document.createElement("td");
         var newbtn=document.createElement("button");
-        newbtn.innerHTML="操作";
+        newbtn.innerHTML="删除";
         newCol3.appendChild(newbtn);
         newRow.appendChild(newCol3);
         tbody.appendChild(newRow);
