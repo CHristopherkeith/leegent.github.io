@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>遍历树</title>
+</head>
+<style>
+    div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        border: 1px solid;
+        box-sizing: border-box;
+        margin: 5px;
+        padding: 10px;
+        background-color: #ffffff;
+    }
+    br{
+        clear: left;
+    }
+    legend{
+        font-family: "黑体";
+        font-size: 20px;
+    }
+    #root,fieldset{
+        float: left;
+    }
+</style>
+<body>
+<div id="root">Super
+    <div>Ruby
+        <div>Apple
+            <div>Pear</div>
+            <div>Pig</div>
+            <div>Cola</div>
+            <div>Soccer</div>
+        </div>
+        <div>Phone</div>
+        <div>
+            <div>Book</div>
+            <div>School</div>
+        </div>
+    </div>
+    <div>Note
+        <div>Human
+            <div>Code</div>
+            <div>Operate</div>
+            <div>Man</div>
+        </div>
+        <div>Program
+            <div>Boment
+                <div>cat</div>
+            </div>
+            <div>Glass</div>
+        </div>
+    </div>
+    <div>Fish</div>
+</div>
+<br><br>
+<fieldset>
+    <legend>树</legend>
+    <button id="dfs">深度优先遍历</button>
+    <button id="bfs">广度优先遍历</button>
+    &nbsp;&nbsp;速度：
+    <label><input type="radio" name="speed" value="fast" checked="checked">快</label>
+    <label><input type="radio" name="speed" value="slow">慢</label>
+    <br><br>
+    <input type="text" id="searchText">
+    <button id="search">搜索</button>
+    <br><br><br>
+    <button id="delete">删除结点</button> &nbsp;&nbsp;&nbsp;<input type="text" id="newNodeText">&nbsp;<button id="add">添加子结点</button>
+</fieldset>
+<script src="task24.js"></script>
+</body>
+</html>

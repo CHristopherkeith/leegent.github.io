@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>遍历树</title>
+</head>
+<style>
+    div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        border: 1px solid;
+        box-sizing: border-box;
+        margin: 5px;
+        padding: 10px;
+        background-color: #ffffff;
+    }
+    br{
+        clear: left;
+    }
+    legend{
+        font-family: "黑体";
+        font-size: 20px;
+    }
+    .tn1,fieldset{
+        float: left;
+    }
+</style>
+<body>
+<div id="root" class="tn1">Super
+    <div class="tn2">Ruby
+        <div class="tn3">Apple
+            <div class="tn4">Pear</div>
+            <div class="tn4">Pig</div>
+            <div class="tn4">Cola</div>
+            <div class="tn4">Soccer</div>
+        </div>
+        <div class="tn3">Phone</div>
+        <div class="tn3">
+            <div class="tn4">Book</div>
+            <div class="tn4">School</div>
+        </div>
+    </div>
+    <div class="tn2">Note
+        <div class="tn3">Human
+            <div class="tn4">Code</div>
+            <div class="tn4">Operate</div>
+            <div class="tn4">Man</div>
+        </div>
+        <div class="tn3">Program
+            <div class="tn4">Boment
+                <div class="tn5">cat</div>
+            </div>
+            <div class="tn4">Glass</div>
+        </div>
+    </div>
+    <div class="tn2">Fish</div>
+</div>
+<br><br>
+<fieldset>
+    <legend>树</legend>
+    <button id="dfs">深度优先遍历</button>
+    <button id="bfs">广度优先遍历</button>
+    &nbsp;&nbsp;速度：
+    <label><input type="radio" name="speed" value="fast" checked="checked">快</label>
+    <label><input type="radio" name="speed" value="slow">慢</label>
+    <br><br>
+    <input type="text" id="searchText">
+    <button id="search">搜索</button>
+</fieldset>
+<script src="task23.js"></script>
+</body>
+</html>
