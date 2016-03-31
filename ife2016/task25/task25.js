@@ -46,17 +46,22 @@ TreeNode.prototype = {
             this.selfElement.getElementsByClassName("node-title")[0].className = "node-title";
         }
     },
-    // 删除结点，自动递归删除子节点
+    // 删除结点，DOM会自动递归删除子节点，TreeNode递归手动删除子节点
     deleteNode: function () {
+        var i;
+        // 递归删除子节点
+        if(this.childs.length>0){
+            for(i=0;i<this.childs.length;i++){
+                this.childs[i].deleteNode();
+            }
+        }
         this.parent.selfElement.removeChild(this.selfElement);// 移除对应的DOM结点
-        console.log(this.parent.childs);
-        for (var i = 0; i < this.parent.childs.length; i++) { // 从父节点删除该孩子
+        for (i = 0; i < this.parent.childs.length; i++) { // 从父节点删除该孩子
             if (this.parent.childs[i] == this) {
                 this.parent.childs.splice(i, 1);
                 break;
             }
         }
-        console.log(this.parent.childs);
         // 调整父结点箭头样式
         this.parent.render(true, false);
     },
@@ -103,13 +108,13 @@ TreeNode.prototype = {
     toggleFold: function () {
         if (this.childs.length == 0) return this; // 叶节点，无需操作
         // 改变所有子节点的可见状态
-        for (var i in this.childs)
+        for (var i=0;i<this.childs.length;i++)
             this.childs[i].render(false, true);
         // 渲染本节点的箭头
         this.render(true, false);
         return this; // 返回自身，以便链式操作
     }
-}
+};
 //=======================================以上是封装TreeNode的代码=============================================
 
 //=============================================事件绑定区===============================================
@@ -151,12 +156,12 @@ root.search = function (query) {
         // 读取当前结点data
         if (current.data == query) resultList.push(current); //找到了
         // 将当前结点的所有孩子节点入“待访问”队
-        for (var i in current.childs) {
+        for (var i=0;i<current.childs.length;i++) {
             queue.push(current.childs[i]);
         }
     }
     return resultList;
-}
+};
 // 搜索并显示结果
 addEvent(document.getElementById("search"), "click", function () {
     var text = document.getElementById("searchText").value.trim();
@@ -174,7 +179,7 @@ addEvent(document.getElementById("search"), "click", function () {
         document.getElementById("result").innerHTML = "查询到" + resultList.length + "个符合条件的结点";
         // 将所有结果结点沿途展开，结果结点加粗红色展示
         var pathNode;
-        for (var x in resultList) {
+        for (var x = 0;x<resultList.length;x++) {
             pathNode = resultList[x];
             pathNode.render(false, false, true, false);
             while (pathNode.parent != null) {
