@@ -23,4 +23,4 @@
 ## tips:
 - img放在block元素中会导致奇怪的间隙出现，请使用vertical-align: top/bottom/text-top/text-bottom;解决之
 - prompt点击cancel返回null
-- 自定义的属性要使用getter/setter或attributes[]方法访问
+- DOM元素上自定义的属性要使用getter/setter或attributes[]方法访问
