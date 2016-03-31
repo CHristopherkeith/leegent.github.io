@@ -201,7 +201,7 @@ addEvent(document.getElementById("clear"), "click", function () {
 //动态生成Demo树
 root.addChild("编程语言").addChild("技术").addChild("谈笑风生");
 root.childs[0].addChild("HTML5").addChild("CSS3").addChild("JavaScript").addChild("PHP").addChild("Node.JS").toggleFold();
-root.childs[0].childs[1].addChild("JavaScript").toggleFold();
+root.childs[0].childs[4].addChild("JavaScript").toggleFold();
 root.childs[1].addChild("百度").addChild("腾讯").addChild("大众点评").addChild("JavaScript").toggleFold();
 root.childs[2].addChild("身经百战").addChild("学习一个").addChild("吟两句诗").toggleFold();
 root.childs[2].childs[2].addChild("苟利国家生死以").toggleFold();
