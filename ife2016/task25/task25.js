@@ -73,6 +73,10 @@ TreeNode.prototype = {
             return this;
         }
         // 先增加子节点，再渲染自身样式
+        // 若当前节点关闭，则将其展开
+        if(this.childs.length>0 && this.childs[0].selfElement.className=="nodebody-hidden"){
+            this.toggleFold();
+        }
         // 创建新的DOM结点并附加
         var newNode = document.createElement("div");
         newNode.className = "nodebody-visible";
