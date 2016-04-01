@@ -21,14 +21,14 @@ TreeNode.prototype = {
             deHighlight = false;
         }
         if (arrow) {
-            if (this.childs.length == 0) { // 是个叶节点，设为空箭头
+            if (this.isLeaf()) { // 是个叶节点，设为空箭头
                 this.selfElement.getElementsByClassName("arrow")[0].className = "arrow empty-arrow";
             }
-            else if (this.childs[0].selfElement.className.indexOf("nodebody-visible") != -1) { // 有可见结点，设为下箭头
-                this.selfElement.getElementsByClassName("arrow")[0].className = "arrow down-arrow";
+            else if (this.isFolded()) { // 折叠状态，设为右箭头
+                this.selfElement.getElementsByClassName("arrow")[0].className = "arrow right-arrow";
             }
-            else {
-                this.selfElement.getElementsByClassName("arrow")[0].className = "arrow right-arrow"; // 右箭头
+            else { // 展开状态，设为下箭头
+                this.selfElement.getElementsByClassName("arrow")[0].className = "arrow down-arrow";
             }
         }
         if (visibility) { // 改变可见性
@@ -39,7 +39,7 @@ TreeNode.prototype = {
                 this.selfElement.className = this.selfElement.className.replace("visible", "hidden");
             }
         }
-        if (toHighlight) { // 改变高亮
+        if (toHighlight) { // 设为高亮
             this.selfElement.getElementsByClassName("node-title")[0].className = "node-title node-title-highlight";
         }
         if (deHighlight) { // 取消高亮
@@ -50,7 +50,7 @@ TreeNode.prototype = {
     deleteNode: function () {
         var i;
         // 递归删除子节点
-        if(this.childs.length>0){
+        if(!this.isLeaf()){
             for(i=0;i<this.childs.length;i++){
                 this.childs[i].deleteNode();
             }
@@ -74,7 +74,7 @@ TreeNode.prototype = {
         }
         // 先增加子节点，再渲染自身样式
         // 若当前节点关闭，则将其展开
-        if(this.childs.length>0 && this.childs[0].selfElement.className=="nodebody-hidden"){
+        if(!this.isLeaf() && this.isFolded()){
             this.toggleFold();
         }
         // 创建新的DOM结点并附加
@@ -110,28 +110,38 @@ TreeNode.prototype = {
     },
     // 展开、收拢结点
     toggleFold: function () {
-        if (this.childs.length == 0) return this; // 叶节点，无需操作
+        if (this.isLeaf()) return this; // 叶节点，无需操作
         // 改变所有子节点的可见状态
         for (var i=0;i<this.childs.length;i++)
             this.childs[i].render(false, true);
         // 渲染本节点的箭头
         this.render(true, false);
         return this; // 返回自身，以便链式操作
+    },
+    // 判断是否为叶结点
+    isLeaf: function(){
+        return this.childs.length == 0;
+    },
+    // 判断结点是否处于折叠状态
+    isFolded: function(){
+        if(this.isLeaf()) return false; // 叶结点返回false
+        if(this.childs[0].selfElement.className == "nodebody-visible") return false;
+        return true;
     }
 };
 //=======================================以上是封装TreeNode的代码=============================================
 
 //=============================================事件绑定区===============================================
-// 获得页面上的root结点
-var rootDom = document.getElementsByClassName("nodebody-visible")[0];
+// 创建根节点对应的TreeNode对象
+var root = new TreeNode({parent: null, childs: [], data: "前端攻城狮", selfElement: document.getElementsByClassName("nodebody-visible")[0]});
 // 为root绑定事件代理，处理所有节点的点击事件
-addEvent(rootDom, "click", function (e) {
+addEvent(root.selfElement, "click", function (e) {
     var target = e.target || e.srcElement;
     var domNode = target;
     while (domNode.className.indexOf("nodebody") == -1) domNode = domNode.parentNode; // 找到类名含有nodebody前缀的DOM结点
     selectedNode = domNode.TreeNode; // 获取DOM对象对应的TreeNode对象
+    // 如果点在节点文字或箭头上
     if (target.className.indexOf("node-title") != -1 || target.className.indexOf("arrow") != -1) {
-        // 如果点在节点文字或箭头上
         selectedNode.toggleFold(); // 触发toggle操作
     }
     else if (target.className == "addIcon") { // 点在加号上
@@ -141,8 +151,6 @@ addEvent(rootDom, "click", function (e) {
         selectedNode.deleteNode();
     }
 });
-// 创建根节点对应的TreeNode对象
-var root = new TreeNode({parent: null, childs: [], data: "前端攻城狮", selfElement: rootDom});
 
 // 给root绑定广度优先搜索函数，无需访问DOM，返回一个搜索结果队列
 root.search = function (query) {
