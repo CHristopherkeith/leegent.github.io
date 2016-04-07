@@ -2,7 +2,7 @@
 * 预设数据
 * */
 //最接近行星的轨道高度，轨道间隔
-var firstOrbit = 10,orbitInterval = 40;
+var firstOrbit = 50,orbitInterval = 60;
 
 /*
  * 游戏控制台，用于输出信息
@@ -285,7 +285,7 @@ var Spacecraft = function (id) {
             switch (cmd.command) {
                 case "move":
                     craft._controller._move();
-                    text = craft._id + "号飞船 启动";
+                    text = craft._id + "号飞船 开始飞行";
                     break;
                 case "stop":
                     craft._controller._stop();
@@ -324,7 +324,7 @@ function spacecraftFactory() {
     // 创建新的飞船
     var sc = new Spacecraft(newId);
     // 在指挥面板添加对应的指令按钮
-    var cp = $("\<div id=" + sc.getId() + "-command' class='command-set'>\<span>对" + sc.getId() + "号飞船下达命令：</span><button id='sc" + sc.getId() + "-move'>飞行\</button><button id='sc" + sc.getId() + "-stop'>停止\</button><button id='sc" + sc.getId() + "-self-destory'>销毁\</button></div>").appendTo($("#command-area"));
+    var cp = $("\<div id=" + sc.getId() + "-command' class='command-set'>\<span>对" + sc.getId() + "号飞船下达命令</span><button id='sc" + sc.getId() + "-move'>飞行\</button><button id='sc" + sc.getId() + "-stop'>停止\</button><button id='sc" + sc.getId() + "-self-destory'>销毁\</button></div>").appendTo($("#command-area"));
     commander.commandPanels.push({id: sc.getId(), cp: cp});
     // 点击按钮信息传给指挥官
     $("#sc" + sc.getId() + "-move").click(function () {
