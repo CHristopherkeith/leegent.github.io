@@ -23,11 +23,13 @@ var gameconsole = {
             "&nbsp;&nbsp;";
     },
     // 打印信息
-    print: function (text) {
-        this.self.append($("<p>" + this.getTime() + text + "</p>"));
+    print: function (text,style) {
+        var printText = this.getTime() + text ;
+        if(style == "fail") printText = "\<span class = 'console-text-fail'>"+printText+"\</span>";
+        this.self.append($("<p>" + printText + "</p>"));
         this.self.scrollTop(this.self[0].scrollHeight);
     }
-}
+};
 
 /*
  * Mediator，实质是个代理，从信号发射器接收命令，广播给所有飞船
@@ -66,11 +68,11 @@ var mediator = {
             }
             // 丢包
             else {
-                gameconsole.print("[发送失败] 您对" + cmd.id + "号飞船下达的\"" + cmd.command + "\"指令不幸丢失");
+                gameconsole.print("[发送失败] 您对" + cmd.id + "号飞船下达的\"" + cmd.command + "\"指令不幸丢失","fail");
             }
         }, 1000);
     }
-}
+};
 
 /*
  * 指挥官，掌握着每艘船的命令面板
@@ -90,8 +92,8 @@ var commander = {
                 }
                 else {
                     this.craftCount++;
-                    var id = spacecraftFactory().getId();
-                    consoleText = "新的飞船（编号：" + id + "）已加入作战序列！目前我们共有" + this.craftCount + "艘太空飞船";
+                    var newId = spacecraftFactory().getId();
+                    consoleText = "新的飞船（编号：" + newId + "）已加入作战序列！目前我们共有" + this.craftCount + "艘太空飞船";
                 }
                 return consoleText; // 无需向mediator发送指令，故直接返回
             case "move":
@@ -120,13 +122,14 @@ var commander = {
     send: function (cmd) {
         mediator.onReceive(cmd);
     }
-}
+};
 
 /*
  * 飞船的构造函数
  */
 var Spacecraft = function (id) {
-    var planetTop = parseInt($(".planet").css("top").replace("px", "")), planetDiameter = $(".planet").width();
+    var planet = $(".planet");
+    var planetTop = parseInt(planet.css("top").replace("px", "")), planetDiameter = planet.width();
     // 创造飞船形象并放在初始位置
     var self = $("\<div class='spacecraft' id=sc" + id + ">\<div class='spacecraft-tailwing'></div>\<div class='spacecraft-cabin'>\<span class='spacecraft-info'>" + id + "号-\<span class='spacecraft-energy'>100</span>%</span></div></div>");
     // 计算飞船轨道(距行星表面的高度）
@@ -164,7 +167,7 @@ var Spacecraft = function (id) {
             _moveOnce: function () {
                 this._angle = (this._angle + this._angleSpeed) % 360;
                 craft._self.css("transform", "rotate(" + this._angle + "deg)");
-            },
+            }
         },
         /*
          * 能源系统，保存能源信息，执行蓄能和耗能
@@ -295,12 +298,12 @@ var Spacecraft = function (id) {
             }
             gameconsole.print(text);
         }
-    }
+    };
     self.spacecraft = craft;
     // 在mediator那里注册
     mediator.addCraft(craft);
     return craft;
-}
+};
 
 /*
  * 飞船工厂，选择一个编号创造飞船，并且在指挥官视野里创建控制面板
