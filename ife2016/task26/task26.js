@@ -1,8 +1,12 @@
-/**
- * Created by mystery on 2016/4/5.
- */
+/*
+* 预设数据
+* */
+//最接近行星的轨道高度，轨道间隔
+var firstOrbit = 10,orbitInterval = 40;
 
-// 游戏控制台，用于输出信息
+/*
+ * 游戏控制台，用于输出信息
+ */
 var gameconsole = {
     self: $("#console"),
     // 日期时间补零
@@ -24,10 +28,10 @@ var gameconsole = {
         this.self.scrollTop(this.self[0].scrollHeight);
     }
 }
-// 行星半径
-var planetRaduis = 100;
 
-// Mediator，实质是个代理，从信号发射器接收命令，广播给所有飞船
+/*
+ * Mediator，实质是个代理，从信号发射器接收命令，广播给所有飞船
+ */
 var mediator = {
     // 全体飞船
     crafts: [],
@@ -68,7 +72,9 @@ var mediator = {
     }
 }
 
-// 指挥官，掌握着每艘船的命令面板
+/*
+ * 指挥官，掌握着每艘船的命令面板
+ */
 var commander = {
     //（指挥官视角里存在的）飞船数量计数
     craftCount: 0,
@@ -80,7 +86,7 @@ var commander = {
         switch (type) {
             case "create":
                 if (this.craftCount >= 4) {
-                    consoleText = "阁下，我们的太空战舰数量已达指挥上限！";
+                    consoleText = "将军，我们的太空战舰数量已达指挥上限！";
                 }
                 else {
                     this.craftCount++;
@@ -116,17 +122,22 @@ var commander = {
     }
 }
 
-// 飞船的构造函数
-var Spacecraft = function (obj) {
+/*
+ * 飞船的构造函数
+ */
+var Spacecraft = function (id) {
+    var planetTop = parseInt($(".planet").css("top").replace("px", "")), planetDiameter = $(".planet").width();
     // 创造飞船形象并放在初始位置
-    var self = $("\<div class='spacecraft' id=sc" + obj.id + ">\<div class='spacecraft-tailwing'></div>\<div class='spacecraft-cabin'>\<span class='spacecraft-info'>" + obj.id + "号-\<span class='spacecraft-energy'>100</span>%</span></div></div>");
+    var self = $("\<div class='spacecraft' id=sc" + id + ">\<div class='spacecraft-tailwing'></div>\<div class='spacecraft-cabin'>\<span class='spacecraft-info'>" + id + "号-\<span class='spacecraft-energy'>100</span>%</span></div></div>");
+    // 计算飞船轨道(距行星表面的高度）
+    var orbit = firstOrbit + (id - 1) * orbitInterval;
     self.appendTo($("#universe")).css({
-        "top": 370 + obj.orbit + "px",
-        "transform-origin": "50% " + (-(100 + obj.orbit)) + "px"
+        "top": planetTop + planetDiameter + orbit + "px",
+        "transform-origin": "50% " + (-( planetDiameter / 2 + orbit)) + "px"
     });
     var craft = {
         //飞船的编号
-        _id: obj.id,
+        _id: id,
         //当前状态:"MOVE","STAY"两种
         _state: "STAY",
         //创造DOM对象(jQuery)并与此关联
@@ -136,7 +147,7 @@ var Spacecraft = function (obj) {
          */
         _driveSystem: {
             //飞船的轨道高度
-            _orbit: obj.orbit,
+            _orbit: orbit,
             //飞船姿态（角度）
             _angle: 0,
             //速度，单位为px/100毫秒
@@ -145,7 +156,9 @@ var Spacecraft = function (obj) {
             _angleSpeed: 0,
             //计算角速度的函数，用余弦定理
             _calculateAS: function () {
-                this._angleSpeed = Math.acos(1 - this._speed * this._speed / (2 * (obj.orbit + planetRaduis) * (obj.orbit + planetRaduis))) * 180 / Math.PI;
+                // 获得飞船轨道半径
+                var radius = $(".planet").width() / 2 + this._orbit;
+                this._angleSpeed = Math.acos(1 - this._speed * this._speed / (2 * radius * radius)) * 180 / Math.PI;
             },
             //飞行一步
             _moveOnce: function () {
@@ -202,7 +215,7 @@ var Spacecraft = function (obj) {
                 // 检查状态，如在飞，则啥也不做
                 if (craft._state == "MOVE") return;
                 // 如能源不足，则不飞
-                if (!craft._powerSystem._hasEnoughEnergy()){
+                if (!craft._powerSystem._hasEnoughEnergy()) {
                     this._informed("low_power");
                     return;
                 }
@@ -232,7 +245,7 @@ var Spacecraft = function (obj) {
                     craft._powerSystem._chargeOnce();
                 }, 1000);
             },
-            // 来自飞船内部的通知
+            // 来自飞船内部的信息
             _informed: function (info) {
                 switch (info) {
                     // 能量耗尽，停飞
@@ -289,23 +302,24 @@ var Spacecraft = function (obj) {
     return craft;
 }
 
-//飞船工厂，选择一个编号创造飞船，并且在指挥官视野里创建控制面板
+/*
+ * 飞船工厂，选择一个编号创造飞船，并且在指挥官视野里创建控制面板
+ */
 function spacecraftFactory() {
-    var obj = {};
+    var newId = -1;
     //选择一个空闲的编号
-    if (mediator.crafts.length == 0) obj.id = 1;
+    if (mediator.crafts.length == 0) newId = 1;
     else {
         for (var i = 0; i < mediator.crafts.length; i++) {
             if (mediator.crafts[i].getId() > i + 1) {
-                obj.id = i + 1;
+                newId = i + 1;
                 break;
             }
         }
-        if (!obj.id) obj.id = mediator.crafts.length + 1;
+        if (newId === -1) newId = mediator.crafts.length + 1;
     }
-    obj.orbit = 10 + (obj.id - 1) * 40;
     // 创建新的飞船
-    var sc = new Spacecraft(obj);
+    var sc = new Spacecraft(newId);
     // 在指挥面板添加对应的指令按钮
     var cp = $("\<div id=" + sc.getId() + "-command' class='command-set'>\<span>对" + sc.getId() + "号飞船下达命令：</span><button id='sc" + sc.getId() + "-move'>飞行\</button><button id='sc" + sc.getId() + "-stop'>停止\</button><button id='sc" + sc.getId() + "-self-destory'>销毁\</button></div>").appendTo($("#command-area"));
     commander.commandPanels.push({id: sc.getId(), cp: cp});
