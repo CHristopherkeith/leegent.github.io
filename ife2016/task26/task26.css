@@ -46,9 +46,10 @@ button {
     width: 250px;
     min-width: 150px;
     height: 100%;
-    background-color: #b7b7b7;
+    background-color: darkblue;
     font-size: 10px;
     text-align: center;
+    color: white;
 }
 
 #command-panel p {
@@ -64,7 +65,7 @@ button {
     flex-wrap: wrap;
     justify-content: space-around;
     border: 1px solid;
-    margin: 20px 5px;
+    margin: 20px 10px;
     padding: 5px;
 }
 
