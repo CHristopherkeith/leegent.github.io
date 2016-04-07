@@ -1,4 +1,5 @@
-body, div {
+html,body{
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -14,7 +15,7 @@ button {
 
 /* 游戏布景 */
 #game-box {
-    height: 635px;
+    height: 100%;
     min-width: 700px;
     user-select: none;
     -webkit-user-select: none;
@@ -24,7 +25,7 @@ button {
 
 #universe {
     position: relative;
-    height: 635px;
+    height: 100%;
     min-width: 550px;
     margin-right: 150px;
     background-color: black;
@@ -49,7 +50,7 @@ button {
     box-sizing: border-box;
     width: 150px;
     min-width: 150px;
-    height: 635px;
+    height: 100%;
     box-sizing: border-box;
     background-color: #b7b7b7;
     font-size: 10px;
