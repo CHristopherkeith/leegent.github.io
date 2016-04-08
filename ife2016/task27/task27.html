@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务二十七：行星与飞船（二）</title>
+    <link type="text/css" rel="stylesheet" href="task27.css">
+</head>
+<body>
+<div id="game-box">
+    <div id="command-panel"><p>指挥官，请向舰队下达命令</p><br>
+        <div class="command-set">
+            <div class="command-set-system">
+                <span>动力系统：</span>
+                <label><input type="radio" name="drive" value="1" checked="checked">红警号（速率30px/s 能耗2%/s）</label>
+                <label><input type="radio" name="drive" value="2">星际号（速率50px/s 能耗4%/s）</label>
+                <label><input type="radio" name="drive" value="3">三体号（速率80px/s 能耗6%/s）</label>
+            </div>
+            <div class="command-set-system">
+                <span>能源系统：</span>
+                <label><input type="radio" name="power" value="1" checked="checked">光能型（回能速率2%/s）</label>
+                <label><input type="radio" name="power" value="2">以太型（回能速率3%/s）</label>
+                <label><input type="radio" name="power" value="3">核聚型（回能速率4%/s）</label>
+            </div>
+            <button id="create">发射新飞船</button>
+        </div>
+        <div id="command-area"></div>
+    </div>
+    <div id="universe">
+        <div class="planet"></div>
+        <!--<div class='spacecraft' id="sc5"><div class='spacecraft-tailwing'></div><div class='spacecraft-cabin'><span class='spacecraft-info'>1号-<span class='spacecraft-energy'>100</span>%</span></div><div class="spacecraft-firetail"></div></div>-->
+        <div id="console"></div>
+    </div>
+</div>
+<script src="jquery-1.12.2.min.js"></script>
+<script src="task27.js"></script>
+</body>
+</html>

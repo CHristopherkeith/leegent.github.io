@@ -37,8 +37,6 @@ var gameconsole = {
 var mediator = {
     // 全体飞船
     crafts: [],
-    // 暂存命令
-    storeCmd: "",
     // 注册新飞船
     addCraft: function (newCraft) {
         this.crafts.push(newCraft);
