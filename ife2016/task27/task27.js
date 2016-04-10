@@ -2,7 +2,7 @@
  * 预设数据
  * */
 //最接近行星的轨道高度，轨道间隔
-const firstOrbit = 50, orbitInterval = 60;
+const FIRST_ORBIT = 50, ORBIT_INTERVAL = 60;
 
 /*
  * 游戏控制台，用于输出信息
@@ -32,7 +32,7 @@ var gameconsole = {
 };
 
 /*
- * BUS是新一代传播介质
+ * BUS是新一代传播介质，速度快，丢包率低，但只能传递二进制数据
  * */
 var BUS = {
     // 全体飞船
@@ -76,77 +76,191 @@ var BUS = {
                 setTimeout(fn, 300);
             }
         }, 300);
+    },
+    /* 
+     * BUS适配器，提供给原mediator的用户，用于JSON命令格式与二进制传输格式之间的转换
+     */
+    adapter : {
+        // 编码器：JSON->二进制
+        encode : function(jsonCommand){
+            // 将JSON格式的指令转化成二进制码
+            var bicmd = "";
+            // 前四位标示飞船编号
+            bicmd += parseInt(jsonCommand.id, 10).toString(2);
+            while (bicmd.length < 4) bicmd = "0" + bicmd;
+            // 后四位标示具体指令（0001：开始飞行，0010：停止飞行，1100：自我销毁）
+            switch (jsonCommand.command) {
+                case "move":
+                    bicmd += "0001";
+                    break;
+                case "stop":
+                    bicmd += "0010";
+                    break;
+                case "selfDestory":
+                    bicmd += "1100";
+                    break;
+            }
+            return bicmd;
+        },
+        // 译码器：二进制->JSON
+        decode : function (binaryCommand){
+            var cmd = {};
+            cmd.id = parseInt(binaryCommand.substr(0, 4), 2);
+            // 后四位标示具体指令（0001：开始飞行，0010：停止飞行，1100：自我销毁）
+            switch (binaryCommand.substr(4)) {
+                case "0001":
+                    cmd.command = "move";
+                    break;
+                case "0010":
+                    cmd.command = "stop";
+                    break;
+                case "1100":
+                    cmd.command = "selfDestory";
+                    break;
+            }
+            return cmd;
+        }
     }
 };
-
+ 
 /*
- * 指挥官，掌握着每艘船的命令面板，发布命令的功能
+ * 行星：行星上有指挥官、飞船工厂
  */
-var commander = {
-    //（指挥官视角里存在的）飞船数量计数
-    craftCount: 0,
-    //（指挥官视角里存在的）飞船对应的命令面板，元素格式为{id:id,cp:commandPanel}
-    commandPanels: [],
-    // 下达命令
-    createCommand: function (type, id) {
-        var consoleText = "";
-        switch (type) {
-            // 创建飞船，查看动力、能源系统选项，作为参数传给飞船工厂
-            case "create":
-                if (this.craftCount >= 4) {
-                    consoleText = "将军，我们的太空战舰数量已达指挥上限！";
-                }
-                else {
-                    var obj = {};
-                    obj.drive = $("input[name='drive']:checked").val();
-                    obj.power = $("input[name='power']:checked").val();
-                    this.craftCount++;
-                    var newId = spacecraftFactory(obj);
-                    consoleText = "新的飞船（编号：" + newId + "）已加入作战序列！目前我们共有" + this.craftCount + "艘太空飞船";
-                }
-                return consoleText; // 无需向mediator发送指令，故直接返回
-            case "move":
-                consoleText = "命令" + id + "号飞船 开始飞行 的信号已发射";
-                break;
-            case "stop":
-                consoleText = "命令" + id + "号飞船 停止移动 的信号已发射";
-                break;
-            case "selfDestory":
-                this.craftCount--;
-                consoleText = "您已下令" + id + "号飞船自毁。目前我们还剩" + this.craftCount + "艘太空飞船";
-                // 移除该飞船的命令界面
-                for (var i = 0; i < this.commandPanels.length; i++) {
-                    if (this.commandPanels[i].id == id) {
-                        this.commandPanels[i].cp.remove();
-                        this.commandPanels.splice(i, 1);
-                    }
-                }
-                break;
-        }
-        // 向介质发射信号
-        this.send({id: id, command: type});
-        return consoleText;
+var planet = {
+    init:function(){
+        // jquery对象
+        this.self = $(".planet");
+        // 行星距屏幕顶端距离
+        this.top = parseInt(this.self.css("top").replace("px", ""));
+        // 行星直径
+        this.diameter = this.self.width();
     },
-    // 用信号发射器向介质发射指令
-    send: function (cmd) {
-        // 将JSON格式的指令转化成二进制码
-        var bicmd = "";
-        // 前四位标示飞船编号
-        bicmd += parseInt(cmd.id, 10).toString(2);
-        while (bicmd.length < 4) bicmd = "0" + bicmd;
-        // 后四位标示具体指令（0001：开始飞行，0010：停止飞行，1100：自我销毁）
-        switch (cmd.command) {
-            case "move":
-                bicmd += "0001";
+    /*
+     * 指挥官，掌握着每艘船的命令面板，发布命令的功能
+     */
+    commander : {
+        //（指挥官视角里存在的）飞船数量计数
+        craftCount: 0,
+        //（指挥官视角里存在的）飞船对应的命令面板，元素格式为{id:id,cp:commandPanel}
+        commandPanels: [],
+        // 增加命令面板
+        addCommandPanel:function(newId){
+            var cp = $("\<div id=" + newId + "-command' class='command-set'>\<span>对" + newId + "号飞船下达命令\</span><button id='sc" + newId + "-move'>飞行\</button><button id='sc" + newId + "-stop'>停止\</button><button id='sc" + newId + "-self-destory'>销毁\</button></div>").appendTo($("#command-area"));
+            this.commandPanels.push({id: newId, cp: cp});
+            var that =this;
+            // 点击按钮信息传给指挥官
+            $("#sc" + newId + "-move").click(function () {
+                gameconsole.print(that.createCommand("move", newId));
+            });
+            $("#sc" + newId + "-stop").click(function () {
+                gameconsole.print(that.createCommand("stop", newId));
+            });
+            $("#sc" + newId + "-self-destory").click(function () {
+                gameconsole.print(that.createCommand("selfDestory", newId));
+            });
+        },
+        // 移除命令面板
+        removeCommandPanel:function(id){
+            for (var i = 0; i < this.commandPanels.length; i++) {
+                if (this.commandPanels[i].id == id) {
+                    this.commandPanels[i].cp.remove();
+                    this.commandPanels.splice(i, 1);
+                }
+            }
+        },
+        // 下达命令
+        createCommand: function (type, id) {
+            var consoleText = "";
+            switch (type) {
+                // 创建飞船，查看动力、能源系统选项，作为参数传给飞船工厂
+                case "create":
+                    if (this.craftCount >= 4) {
+                        consoleText = "将军，我们的太空战舰数量已达指挥上限！";
+                    }
+                    else {
+                        var obj = {};
+                        obj.drive = $("input[name='drive']:checked").val();
+                        obj.power = $("input[name='power']:checked").val();
+                        this.craftCount++;
+                        var newId = planet.spacecraftFactory(obj);
+                        consoleText = "新的飞船（编号：" + newId + "）已加入作战序列！目前我们共有" + this.craftCount + "艘太空飞船";
+                    }
+                    return consoleText; // 无需向mediator发送指令，故直接返回
+                case "move":
+                    consoleText = "命令" + id + "号飞船 开始飞行 的信号已发射";
+                    break;
+                case "stop":
+                    consoleText = "命令" + id + "号飞船 停止移动 的信号已发射";
+                    break;
+                case "selfDestory":
+                    this.craftCount--;
+                    consoleText = "您已下令" + id + "号飞船自毁。目前我们还剩" + this.craftCount + "艘太空飞船";
+                    // 指挥官认为飞船必然自爆，故直接移除命令面板
+                    this.removeCommandPanel(id);
+                    break;
+            }
+            // 向介质发射信号
+            this.send({id: id, command: type});
+            return consoleText;
+        },
+        // 用信号发射器向介质发射指令
+        send: function (cmd) {
+            BUS.onReceive(BUS.adapter.encode(cmd));
+        }
+    },
+    /*
+     * 飞船工厂，创造飞船并且在指挥官视野里创建对应的控制面板，返回新飞船id
+     */
+    spacecraftFactory:function(o) {
+        // 构造新船需要四个参数：id、speed、consume、charge
+        var obj = {};
+        var newId = -1;
+        //选择一个空闲的编号
+        if (BUS.crafts.length == 0) newId = 1;
+        else {
+            for (var i = 0; i < BUS.crafts.length; i++) {
+                if (BUS.crafts[i].getId() > i + 1) {
+                    newId = i + 1;
+                    break;
+                }
+            }
+            if (newId === -1) newId = BUS.crafts.length + 1;
+        }
+        // 设置用于构造新船的属性
+        obj.id = newId;
+        switch (parseInt(o.drive, 10)) {
+            case 1:
+                obj.speed = 30;
+                obj.consume = 2;
                 break;
-            case "stop":
-                bicmd += "0010";
+            case 2:
+                obj.speed = 50;
+                obj.consume = 4;
                 break;
-            case "selfDestory":
-                bicmd += "1100";
+            case 3:
+                obj.speed = 80;
+                obj.consume = 6;
                 break;
         }
-        BUS.onReceive(bicmd);
+        switch (parseInt(o.power, 10)) {
+            case 1:
+                obj.charge = 2;
+                break;
+            case 2:
+                obj.charge = 3;
+                break;
+            case 3:
+                obj.charge = 4;
+                break;
+        }
+        // 创建新的飞船
+        var sc = new Spacecraft(obj);
+        Object.seal(sc); // 禁止增删飞船的属性
+        // 在指挥面板添加对应的指令按钮
+        planet.commander.addCommandPanel(newId);
+        
+        // 返回新飞船的ID
+        return newId;
     }
 };
 
@@ -159,15 +273,9 @@ var commander = {
  */
 function Spacecraft (obj) {
     var that = this; // 用于在销毁自身的函数里放一个指向飞船对象的指针，见_controller的_selfDestory函数
-    var exist = true; // 用于标识该飞船是否已自爆。由于JS的垃圾回收机制，已经不被引用的对象可能仍在内存保留一段时间，引发bug，故需要这个标识来瘫痪_controller
-
-    // 飞船环绕的行星
-    var _planet = $(".planet");
-    // 行星距屏幕顶端距离、行星直径
-    var _planetTop = parseInt(_planet.css("top").replace("px", "")), planetDiameter = _planet.width();
 
     // 计算飞船轨道(距行星表面的高度）
-    var _orbit = firstOrbit + (obj.id - 1) * orbitInterval;
+    var _orbit = FIRST_ORBIT + (obj.id - 1) * ORBIT_INTERVAL;
 
     //飞船的编号
     var _id = obj.id;
@@ -175,8 +283,8 @@ function Spacecraft (obj) {
     var _state = "STAY";
     //创造DOM对象(jQuery)并与此关联
     var _self = $("\<div class='spacecraft' id=sc" + obj.id + ">\<div class='spacecraft-tailwing'></div>\<div class='spacecraft-cabin'>\<span class='spacecraft-info'>" + obj.id + "号-\<span class='spacecraft-energy'>100</span>%</span></div></div>").appendTo($("#universe")).css({
-        "top": _planetTop + planetDiameter + _orbit + "px",
-        "transform-origin": "50% " + (-( planetDiameter / 2 + _orbit)) + "px"
+        "top": planet.top + planet.diameter + _orbit + "px",
+        "transform-origin": "50% " + (-( planet.diameter / 2 + _orbit)) + "px"
     });
     //尾部火焰
     var _firetail = $("\<div class='spacecraft-firetail'></div>").appendTo(_self);
@@ -194,7 +302,7 @@ function Spacecraft (obj) {
         //计算角速度的函数，用余弦定理
         _calculateAS: function () {
             // 获得飞船轨道半径
-            var radius = planetDiameter / 2 + _orbit;
+            var radius = planet.diameter / 2 + _orbit;
             _driveSystem._angleSpeed = Math.acos(1 - _driveSystem._speed * _driveSystem._speed / (2 * radius * radius)) * 180 / Math.PI;
         },
         //飞行一步
@@ -249,7 +357,6 @@ function Spacecraft (obj) {
         },
         // 飞行
         _move: function () {
-            if(!exist) return;
             // 检查状态，如在飞，则啥也不做
             if (_state == "MOVE") return;
             // 如能源不足，则不飞
@@ -273,9 +380,8 @@ function Spacecraft (obj) {
         },
         // 停止
         _stop: function () {
-            if(!exist) return;
             // 检查状态，如停着，则啥也不做
-            if (_state == "STAY") return;
+            if (_state === "STAY") return;
             _state = "STAY";
             // 停飞
             clearInterval(_controller._driveTimer);
@@ -290,7 +396,6 @@ function Spacecraft (obj) {
         },
         // 来自飞船内部的信息
         _informed: function (info) {
-            if(!exist) return;
             switch (info) {
                 // 能量耗尽，停飞
                 case "low_power":
@@ -306,31 +411,14 @@ function Spacecraft (obj) {
         },
         // 自毁
         _selfDestory: function () {
+            // 停止定时以消除闭包
+            if(_state === "MOVE") clearInterval(_controller._driveTimer);
+            clearInterval(_controller._powerTimer);
             // 删除DOM结点
             _self.remove();
             // 取消介质订阅（该飞船不再存在于介质中，就可以认为它不存在了）
             BUS.removeCraft(that);
-            // 设为不存在
-            exist = false;
         }
-    };
-    // 译码器
-    var _decoder = function (bicmd) {
-        var cmd = {};
-        cmd.id = parseInt(bicmd.substr(0, 4), 2);
-        // 后四位标示具体指令（0001：开始飞行，0010：停止飞行，1100：自我销毁）
-        switch (bicmd.substr(4)) {
-            case "0001":
-                cmd.command = "move";
-                break;
-            case "0010":
-                cmd.command = "stop";
-                break;
-            case "1100":
-                cmd.command = "selfDestory";
-                break;
-        }
-        return cmd;
     };
     /*
      * 飞船对外提供两个接口
@@ -342,7 +430,7 @@ function Spacecraft (obj) {
     // 2.接收并执行命令
     this.executeCommand = function (bicmd) {
         // 解码
-        var cmd = _decoder(bicmd);
+        var cmd = BUS.adapter.decode(bicmd);
         if (cmd.id != _id) return;
         var text;
         switch (cmd.command) {
@@ -365,74 +453,11 @@ function Spacecraft (obj) {
     BUS.addCraft(this);
 }
 
-/*
- * 飞船工厂，创造飞船并且在指挥官视野里创建对应的控制面板
- */
-function spacecraftFactory(o) {
-    // 构造新船需要四个参数：id、speed、consume、charge
-    var obj = {};
-    var newId = -1;
-    //选择一个空闲的编号
-    if (BUS.crafts.length == 0) newId = 1;
-    else {
-        for (var i = 0; i < BUS.crafts.length; i++) {
-            if (BUS.crafts[i].getId() > i + 1) {
-                newId = i + 1;
-                break;
-            }
-        }
-        if (newId === -1) newId = BUS.crafts.length + 1;
-    }
-    // 设置用于构造新船的属性
-    obj.id = newId;
-    switch (parseInt(o.drive, 10)) {
-        case 1:
-            obj.speed = 30;
-            obj.consume = 2;
-            break;
-        case 2:
-            obj.speed = 50;
-            obj.consume = 4;
-            break;
-        case 3:
-            obj.speed = 80;
-            obj.consume = 6;
-            break;
-    }
-    switch (parseInt(o.power, 10)) {
-        case 1:
-            obj.charge = 2;
-            break;
-        case 2:
-            obj.charge = 3;
-            break;
-        case 3:
-            obj.charge = 4;
-            break;
-    }
-    // 创建新的飞船
-    var sc = new Spacecraft(obj);
-    Object.seal(sc); // 禁止增删飞船的属性
-    // 在指挥面板添加对应的指令按钮
-    var cp = $("\<div id=" + sc.getId() + "-command' class='command-set'>\<span>对" + sc.getId() + "号飞船下达命令\</span><button id='sc" + sc.getId() + "-move'>飞行\</button><button id='sc" + sc.getId() + "-stop'>停止\</button><button id='sc" + sc.getId() + "-self-destory'>销毁\</button></div>").appendTo($("#command-area"));
-    commander.commandPanels.push({id: sc.getId(), cp: cp});
-    // 点击按钮信息传给指挥官
-    $("#sc" + sc.getId() + "-move").click(function () {
-        gameconsole.print(commander.createCommand("move", sc.getId()));
-    });
-    $("#sc" + sc.getId() + "-stop").click(function () {
-        gameconsole.print(commander.createCommand("stop", sc.getId()));
-    });
-    $("#sc" + sc.getId() + "-self-destory").click(function () {
-        gameconsole.print(commander.createCommand("selfDestory", sc.getId()));
-    });
-    // 返回新飞船的ID
-    return newId;
-}
-
 $(document).ready(function () {
     /******绑定创建飞船事件******/
     $("#create").bind("click", function () {
-        gameconsole.print(commander.createCommand("create"));
-    })
+        gameconsole.print(planet.commander.createCommand("create"));
+    });
+    // 初始化行星
+    planet.init();
 });
