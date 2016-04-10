@@ -1,0 +1,201 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-size: 15px;
+}
+
+/*
+ * 游戏布景
+ */
+#game-box {
+    height: 100%;
+    min-width: 700px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+/*宇宙，黑色背景*/
+#universe {
+    position: relative;
+    height: 100%;
+    min-width: 550px;
+    margin-right: 260px;
+    background-color: black;
+}
+/*行星*/
+.planet {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 330px;
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+/*
+ * 命令面板
+ */
+#command-panel {
+    z-index: 15;
+    float: right;
+    box-sizing: border-box;
+    width: 260px;
+    min-width: 150px;
+    height: 100%;
+    background-color: darkblue;
+    font-size: 10px;
+    text-align: center;
+    color: white;
+}
+
+#command-panel p {
+    font-family: "微软雅黑 Light";
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.command-set {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 1px solid;
+    margin: 20px 10px;
+    padding: 5px;
+}
+.command-set-system{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5em;
+}
+.command-set-system input[type="radio"]{
+    vertical-align: -2px;
+}
+.command-set span {
+    font-size: 16px;
+    width: 100%;
+    font-family: "黑体";
+    margin-bottom: 8px;
+}
+
+/*
+ * 控制台
+ */
+#console {
+    z-index: 20;
+    position: absolute;
+    bottom: 0;
+    padding: 2px 10px 2px 10px;
+    height: 10.8em;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(153, 153, 153, 0.3);
+    font-size: 14px;
+    color: white;
+    overflow: auto;
+}
+#console p{
+    line-height: 1.8em;
+    margin: 0;
+}
+.console-text-fail {
+    color: red;
+}
+
+/*
+ * 屏幕，显示各个飞船的状态
+ */
+#screen{
+    z-index: 20;
+    float: left;
+    padding: 2px 10px 2px 10px;
+    height: 10.8em;
+    box-sizing: border-box;
+    background-color: rgba(153, 153, 153, 0.3);
+    font-size: 16px;
+    color: white;
+    overflow: auto;
+}
+#screen-table{
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    border-collapse:collapse;
+}
+#screen-table td ,#screen-table th{
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+#screen-table th{
+    background-color: #666;
+    font-family: "黑体";
+    font-size:18px;
+}
+/*
+ * 飞船
+ */
+.spacecraft {
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    top: 100px;
+    width: 70px;
+    height: 20px;
+    background-color: darkred;
+    border-radius: 22px;
+}
+
+.spacecraft-cabin {
+    position: absolute;
+    left: 10px;
+    height: 20px;
+    width: 60px;
+    background-color: #999999;
+    border-radius: 6px 22px 22px 6px / 22px;
+    /*border-top-left-radius: 6px 22px;*/
+    /*border-bottom-left-radius: 6px 22px;*/
+    /*border-top-right-radius: 22px;*/
+    /*border-bottom-right-radius: 22px;*/
+    text-align: center;
+}
+
+.spacecraft-info {
+    font-family: "黑体";
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    cursor: default;
+}
+
+/*飞船尾翼*/
+.spacecraft-tailwing {
+    float: right;
+    margin-right: -2px;
+    margin-top: -8px;
+    border-right: 70px solid darkred;
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+}
+
+/*尾部火焰*/
+.spacecraft-firetail{
+    position: absolute;
+    right: -22px;
+    top: 2px;
+    border-left: 20px solid yellow;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    display: none;
+}
