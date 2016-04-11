@@ -46,14 +46,12 @@ var BUS = {
     },
     // 移除飞船
     removeCraft: function (rc) {
-        console.log("before: "+this.crafts.length);
         for (var i = 0; i < this.crafts.length; i++) {
             if (this.crafts[i].getId() == rc.getId()) {
                 this.crafts.splice(i, 1);
                 break;
             }
         }
-        console.log("after: "+this.crafts.length);
     },
     // 收到信号后，延时300毫秒转发给飞船，同时有10%的概率丢失命令，但会一直重试以保证传递成功
     onReceive: function (cmd) {
