@@ -1,6 +1,6 @@
 /**
  * 模块4.飞船的构造函数
- * 飞船共有三个内部系统：能源，动力，控制。前两个系统互不访问，由控制系统集中管理
+ * 飞船内部有三个主要的系统：能源，动力，控制。前两个系统互不访问，由控制系统集中管理。另外有一个信号发射器，不断向BUS广播自身状态
  * 控制系统向上承接指令，向下指挥其他系统执行指令。自毁功能也在控制系统内
  * 内部变量和函数用下划线表示，建议不直接访问（本来打算用闭包封装，但这样无法使用原型继承，对内存开销有影响）
  * 飞船暴露给外界的接口有3个：getId(),getSystemType()和onReceiveMessage()
@@ -10,7 +10,7 @@
  */
 function Spacecraft(obj) {
     // 注意构造函数里的this会被指向新创建的对象
-    var that = this; // 用于在销毁自身的函数里放一个指向飞船对象的指针，见_controller的_selfDestory函数
+    var that = this; // 用于在嵌套的函数作用域里放一个指向飞船对象的指针
 
     // 计算飞船轨道(距行星表面的高度）
     this._orbit = obj.orbit;
@@ -19,7 +19,7 @@ function Spacecraft(obj) {
     this._id = obj.id;
     //当前状态:"MOVE","STAY","DESTORY"三种
     this._state = "STAY";
-    //创造DOM对象(jQuery)并与此关联
+    //创造DOM对象(jQuery对象)并与此关联
     this._self = $("\<div class='spacecraft' id=sc" + obj.id + ">\<div class='spacecraft-tailwing'></div>\<div class='spacecraft-cabin'>\<span class='spacecraft-info'>" + obj.id + "号-\<span class='spacecraft-energy'>100</span>%</span></div></div>").appendTo($("#universe")).css({
         "top": planet.top + planet.diameter + this._orbit + "px",
         "transform-origin": "50% " + (-( planet.diameter / 2 + this._orbit)) + "px"
@@ -93,10 +93,8 @@ function Spacecraft(obj) {
      */
     this._controller = {
         // 飞行和能源定时器
-        _driveTimer: function () {
-        },
-        _powerTimer: function () {
-        },
+        _driveTimer: 0,
+        _powerTimer: 0,
         // 飞行
         _move: function () {
             // 检查状态，如在飞，则啥也不做
