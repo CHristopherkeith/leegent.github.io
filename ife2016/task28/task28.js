@@ -261,9 +261,14 @@ var planet = {
                         // 从命令面板获取飞船动力、能源选项
                         obj.drive = $("input[name='drive']:checked").val();
                         obj.power = $("input[name='power']:checked").val();
-                        this._craftCount++;
                         // 创造飞船
                         var newId = planet.spacecraftFactory.launchCraft(obj);
+                        // 在指挥面板添加对应的指令按钮
+                        if(newId === -1){
+                            return "飞船数量已达到游戏上限！";
+                        }
+                        this.onNewCraftLaunch(newId);
+                        this._craftCount++;
                         consoleText = "新的飞船（编号：" + newId + "）已加入作战序列！目前我们共有" + this._craftCount + "艘太空飞船";
                     }
                     return consoleText; // 无需向媒介发送指令，故直接返回
@@ -311,7 +316,7 @@ var planet = {
     	},
     	/**
     	 * 发射飞船，参数为从界面接收的动力、能源系统选项
-    	 * @param {{drive:{Number},power:{Number}}} 动力、能源系统
+    	 * @param {{drive:{Number},power:{Number}}} o 动力、能源系统
     	 * @return {Number} newId 新飞船的ID
     	 */
     	launchCraft: function (o) {
@@ -323,7 +328,7 @@ var planet = {
 	        var newId = this.idManager.getNewId();
 	        if (newId === -1) {
 	            alert("飞船数量超出上限！");
-	            return;
+	            return -1;
 	        }
 	        obj.id = newId;
 	        // 计算飞船轨道
@@ -359,8 +364,6 @@ var planet = {
 	        // 创建新的飞船
 	        var sc = new Spacecraft(obj);
 	        Object.seal(sc); // 禁止增删飞船的属性
-	        // 在指挥面板添加对应的指令按钮
-	        planet.commander.onNewCraftLaunch(newId);
 	        // 通知数据中心添加对新飞船的监控
 	        planet.DC.addCraft(sc);	
 
