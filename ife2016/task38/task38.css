@@ -1,0 +1,43 @@
+#main{
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/*排序表格*/
+.sortabletable{
+	font-size: 22px;
+	border:1px solid rgb(196,196,196);
+}
+.sortabletable th{
+	padding: 5px;
+	width: 168px;	
+	color: #fff;
+	background-color: rgb(51,51,51);
+}
+.sortabletable td{
+	padding: 10px;
+	color: rgb(53,53,53);
+}
+
+.arrow-container{
+	float: right;
+}
+.arrow-up{
+	border-bottom: 8px solid #fff;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	margin-bottom: 5px;
+}
+.arrow-up:hover{
+	border-bottom-color: #ccc;
+}
+.arrow-down{
+	border-top: 8px solid #fff;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+}
+.arrow-down:hover{
+	border-top-color: #ccc;
+}
+/*********/
