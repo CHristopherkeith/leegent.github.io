@@ -1,0 +1,32 @@
+body{
+    margin:0;
+    font-size:40px;
+}
+#demo{
+    position: absolute;
+    margin-left: 300px;
+}
+
+/*头部固定表格*/
+.headfixedtable{
+    font-size: 22px;
+    border-collapse: collapse;
+}
+.headfixedtable th{
+    padding: 5px;
+    width: 168px;
+    color: #fff;
+    border: 2px solid lightgray;
+    background-color: rgb(51,51,51);
+}
+.headfixedtable td{
+    padding: 10px;
+    color: rgb(53,53,53);
+    border: 2px solid lightgray;
+    text-align: center;
+}
+.fixedthead{
+    position: fixed;
+    top:0;
+}
+/************/

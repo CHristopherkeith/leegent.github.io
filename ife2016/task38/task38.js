@@ -19,11 +19,11 @@ function createSortableTable (header,attributes,data,sortableColumns){
 	html = headerHTML;
 	// 添加数据
 	for(i=0;i<data.length;i++){
-		html += "<tr><td>"+data[i].name+"</td>"+
-				"<td>"+data[i].Chinese+"</td>"+
-				"<td>"+data[i].math+"</td>"+
-				"<td>"+data[i].English+"</td>"+
-				"<td>"+data[i].sum+"</td></tr>";
+        html +="<tr>";
+		for(var j=0;j<attributes.length;j++){
+            html += "<td>"+data[i][attributes[j]]+"</td>";
+        }
+        html +="</tr>";
 	}
 	mytable.innerHTML = html;
 	// 点击排序事件代理
@@ -45,13 +45,13 @@ function createSortableTable (header,attributes,data,sortableColumns){
 		}
 		// 重新设置表格数据
 		html = headerHTML;
-		for(i=0;i<data.length;i++){
-			html += "<tr><td>"+data[i].name+"</td>"+
-					"<td>"+data[i].Chinese+"</td>"+
-					"<td>"+data[i].math+"</td>"+
-					"<td>"+data[i].English+"</td>"+
-					"<td>"+data[i].sum+"</td></tr>";
-		}
+        for(i=0;i<data.length;i++){
+            html +="<tr>";
+            for(var j=0;j<attributes.length;j++){
+                html += "<td>"+data[i][attributes[j]]+"</td>";
+            }
+            html +="</tr>";
+        }
 		mytable.innerHTML = html;
 	});
 	return mytable;

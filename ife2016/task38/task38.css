@@ -7,16 +7,20 @@
 /*排序表格*/
 .sortabletable{
 	font-size: 22px;
-	border:1px solid rgb(196,196,196);
+	border-collapse: collapse;
+	border:2px solid rgb(196,196,196);
 }
 .sortabletable th{
 	padding: 5px;
 	width: 168px;	
 	color: #fff;
+    border: 2px solid lightgray;
 	background-color: rgb(51,51,51);
 }
 .sortabletable td{
 	padding: 10px;
+    text-align: center;
+    border: 2px solid lightgray;
 	color: rgb(53,53,53);
 }
 
