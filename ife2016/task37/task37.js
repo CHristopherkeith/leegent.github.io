@@ -24,7 +24,7 @@ function createSurface(title,content,okCallback,cancelCallback){
         shade.parentNode.removeChild(shade);
         cancelCallback();
     });
-    // 为遮罩绑定移除事件,
+    // 为遮罩绑定移除事件
     shade.addEventListener("click", function (e) {
         var target = e.target || e.srcElement;
         // 点在遮罩而不是浮出层上，关闭
