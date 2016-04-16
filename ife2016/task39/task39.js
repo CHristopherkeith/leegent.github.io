@@ -1,57 +1,75 @@
 /**
- * Created by mystery on 2016/4/15.
- */
-
-/**
- * 创建头部固定的表格
+ * 创建头部固定的表格构造函数
  * @param {Array} head 全体列名的数组
  * @param {Array} attributes 全体属性名，与列名按对应的顺序排好
  * @param {Array} data 表格信息
  */
-function createHeadFixedTable(head, attributes, data) {
+function HeadFixedTable(head, attributes, data) {
+	var that = this;
+	this.head = head;
+	this.attributes = attributes;
+	this.data = data;
     // 创建表格
-    var table = document.createElement("table");
-    table.className = "headfixedtable";
+    this.tableDOM = document.createElement("table");
+    this.tableDOM.className = "headfixedtable";
+    this.tableDOM.table = this;
     // 创建头部
-    var headHTML = "";
+    var headContent = "";
     for (var i = 0; i < head.length; i++) {
-        headHTML += "<th>" + head[i] + "</th>";
+        headContent += "<th>" + head[i] + "</th>";
     }
-    headHTML += "";
-    var html = "<thead><tr>" + headHTML + "</tr></thead>";
+    this.headHTML = "<thead><tr>" + headContent + "</tr></thead>";
+    // 首次渲染表格
+    this.render();
     // 是否已创建了固定头部，以及固定头部的引用
-    var hasFixedHead = false;
-    var fixedHead = document.createElement("tr");
-    fixedHead.className = "fixedthead";
-    fixedHead.innerHTML = headHTML;
+    this.hasFixedHead = false;
+    this.fixedHeadRow = document.createElement("tr");
+    this.fixedHeadRow.className = "fixedthead";
+    this.fixedHeadRow.innerHTML = headContent;
 
-    // 写入表格数据
-    for (i = 0; i < data.length; i++) {
+    // 监听onscroll事件。由于该事件目标不是表格，故不得不用闭包来指定当前表格
+    document.addEventListener("scroll", function () {
+    	var tableClientY = that.tableDOM.getBoundingClientRect().top, lastRowClientY = that.tableDOM.lastChild.lastChild.getBoundingClientRect().top;
+        if (!that.tableDOM.hasFixedHead && (tableClientY <= 0 && lastRowClientY >= 0)) {
+            // 将fixedHeadRow插入到表格里
+            that.tableDOM.firstChild.insertBefore(that.fixedHeadRow,that.tableDOM.firstChild.firstChild);
+            that.tableDOM.hasFixedHead = true;
+        }
+        if(that.tableDOM.hasFixedHead && (tableClientY > 0 || lastRowClientY < 0)){
+            // 将fixedHeadRow从表格里移除（但不删除）
+            that.fixedHeadRow = that.tableDOM.firstChild.removeChild(that.fixedHeadRow);
+            that.tableDOM.hasFixedHead = false;
+        }
+    });
+}
+/**
+ * 渲染表格
+ */
+HeadFixedTable.prototype.render=function () {
+	var html = this.headHTML;
+	// 写入表格数据
+    for (var i = 0; i < this.data.length; i++) {
         html += "<tr>";
-        for (var j = 0; j < attributes.length; j++) {
-            html += "<td>" + data[i][attributes[j]] + "</td>";
+        for (var j = 0; j < this.attributes.length; j++) {
+            html += "<td>" + this.data[i][this.attributes[j]] + "</td>";
         }
         html += "</tr>";
     }
-    table.innerHTML = html;
-
-    // 监听onscroll事件
-    document.addEventListener("scroll", handler);
-    function handler() {
-        var tableClientY = table.getBoundingClientRect().top, lastRowClientY = table.lastChild.lastChild.getBoundingClientRect().top;
-        if (!hasFixedHead && (tableClientY <= 0 && lastRowClientY >= 0)) {
-            // 将fixedHead插入到表格里
-            table.firstChild.insertBefore(fixedHead,table.firstChild.firstChild);
-            hasFixedHead = true;
-        }
-        if(hasFixedHead && (tableClientY > 0 || lastRowClientY < 0)){
-            // 将fixedHead从表格里移除（但不删除）
-            fixedHead = table.firstChild.removeChild(fixedHead);
-            hasFixedHead = false;
-        }
-    }
-    return table;
+    this.tableDOM.innerHTML = html;
 }
+/**
+ * 获取表格DOM元素
+ */
+ HeadFixedTable.prototype.getDOM = function() {
+ 	return this.tableDOM;
+ }
+ /**
+ * 更新表格数据
+ */
+ HeadFixedTable.prototype.updateData = function(data){
+ 	this.data = data;
+ 	this.render();
+ }
 
 //以下是demo代码
 document.getElementById("btn").addEventListener("click", function () {
@@ -115,5 +133,5 @@ document.getElementById("btn").addEventListener("click", function () {
             sum:240
         }
     ];
-    document.getElementById("demo").appendChild(createHeadFixedTable(head,attributes,data));
+    document.getElementById("demo").appendChild((new HeadFixedTable(head,attributes,data)).getDOM());
 });

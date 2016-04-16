@@ -70,10 +70,11 @@ SortableTable.prototype.render = function (){
 };
 /**
  * 更新数据
- * @param {Array}data
+ * @param {Array} data
  */
 SortableTable.prototype.updateData = function (data) {
     this.data = data;
+    this.render();
 }
 /**
  * 获取表格DOM元素
