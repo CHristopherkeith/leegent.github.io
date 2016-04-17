@@ -14,7 +14,7 @@ function TreeNode(obj) {
 // 原型模式封装公共操作
 TreeNode.prototype = {
     constructor: TreeNode,
-    // 解耦样式操作，三个参数表示是否改变箭头、可见性、改为高亮、改为普通
+    // 解耦样式操作，四个参数表示是否改变箭头、可见性、改为高亮、改为普通，后两个参数可省略
     render: function (arrow, visibility, toHighlight, deHighlight) {
         if (arguments.length < 3) {
             toHighlight = false;
