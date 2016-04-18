@@ -76,11 +76,11 @@ body{
 }
 /*特殊样式*/
 /*被选中的日期*/
-.datepicker-day-selected, .datepicker-day td:hover{
+.datepicker-day-selected, .datepicker-day-selectedmonth:hover{
     background-color: #BBFFEE !important;
 }
 /*其他月份的日期*/
-.datepicker-day-othermonth{
+.datepicker-day-previousmonth,.datepicker-day-nextmonth{
     color: gray;
 }
 /**********************/
