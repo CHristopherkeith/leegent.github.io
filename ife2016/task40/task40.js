@@ -1,12 +1,11 @@
 /**
  * 日历构造函数
- * @param {Object} pos 日历出现的坐标
  * @param {Element} target 日历输出结果的DOM元素
  * @param {Date} startDay 可选日期的第一天
  * @param {Date} endDay 可选日期的最后一天
  */
-function Datepicker(pos,target,startDay,endDay) {
-	this.target = target;
+function Datepicker(targetDOM,startDay,endDay) {
+	this.targetJQ = $(targetDOM);
 	this.startDay = startDay;
 	this.endDay = endDay;
     if(!this.startDay) this.startDay = new Date((this.selectedYear-1)+"-"+this.selectedMonth+"-"+this.selectedDate);
@@ -16,7 +15,18 @@ function Datepicker(pos,target,startDay,endDay) {
     this.selectedMonth = this.currentDate.getMonth() + 1;
     this.selectedDate = this.currentDate.getDate();
     // 创建jQuery对象
-    this.JQ = $("<div class='datepicker'><section class='datepicker-header'><div class='datepicker-arrow-left'></div><label class='datepicker-label-year'><select class='datepicker-select-year'></select> 年</label><label class='datepicker-label-month'><select class='datepicker-select-month'></select> 月</label><div class='datepicker-arrow-right'></div></section><section class='datepicker-body'><table class='datepicker-day'><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody></tbody></table></section></div>").appendTo(document.body).css({"left":pos.left,"top":pos.top});
+    this.JQ = $("<div class='datepicker'><section class='datepicker-header'><div class='datepicker-arrow-left'></div><label class='datepicker-label-year'><select class='datepicker-select-year'></select> 年</label><label class='datepicker-label-month'><select class='datepicker-select-month'></select> 月</label><div class='datepicker-arrow-right'></div></section><section class='datepicker-body'><table class='datepicker-day'><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody></tbody></table></section></div>").appendTo(document.body).css(
+    	{
+    		"left":this.targetJQ.offset().left+"px",
+	    	"top":this.targetJQ.offset().top
+	    	   +parseInt(this.targetJQ.css("border-top-width"))
+	    	   +parseInt(this.targetJQ.css("padding-top"))
+	    	   +this.targetJQ.height()
+	    	   +parseInt(this.targetJQ.css("padding-bottom"))
+	    	   +parseInt(this.targetJQ.css("border-bottom-width")),
+		    "z-index":100
+	    }
+	    );
     // 将DOM对象指回自身
     this.JQ[0].self = this;
     // 表格tbody（日期部分）
@@ -113,7 +123,7 @@ Datepicker.prototype.getSelected = function(){
 }
 // 向关联的DOM元素输出日期
 Datepicker.prototype.outputDate = function () {
-	this.target.value = this.getSelected();
+	this.targetJQ.val(this.getSelected());
 }
 // 返回一个日期对象的接口
 Datepicker.prototype.getCurrentDate = function(){
@@ -213,4 +223,4 @@ Datepicker.prototype.render = function () {
 //=================================demo===============================================
 var start = new Date("2016-4-6");
 var end = new Date("2016-6-22");
-var calendar = new Datepicker({left:"500px",top:"100px"},$("#input-date")[0],start,end);
+var calendar = new Datepicker($("#input-date")[0],start,end);
