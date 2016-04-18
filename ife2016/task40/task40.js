@@ -1,11 +1,11 @@
 /**
  * 日历构造函数
- * @param {Element} target 日历输出结果的DOM元素
+ * @param {jQuery} targetJQ 日历输出结果的jQuery元素
  * @param {Date} startDay 可选日期的第一天
  * @param {Date} endDay 可选日期的最后一天
  */
-function Datepicker(targetDOM,startDay,endDay) {
-	this.targetJQ = $(targetDOM);
+function Datepicker(targetJQ,startDay,endDay) {
+	this.targetJQ = targetJQ;
 	this.startDay = startDay;
 	this.endDay = endDay;
     if(!this.startDay) this.startDay = new Date((this.selectedYear-1)+"-"+this.selectedMonth+"-"+this.selectedDate);
@@ -23,7 +23,8 @@ function Datepicker(targetDOM,startDay,endDay) {
 	    	   +parseInt(this.targetJQ.css("padding-top"))
 	    	   +this.targetJQ.height()
 	    	   +parseInt(this.targetJQ.css("padding-bottom"))
-	    	   +parseInt(this.targetJQ.css("border-bottom-width")),
+	    	   +parseInt(this.targetJQ.css("border-bottom-width"))
+	    	   +"px",
 		    "z-index":100
 	    }
 	    );
@@ -125,7 +126,7 @@ Datepicker.prototype.getSelected = function(){
 Datepicker.prototype.outputDate = function () {
 	this.targetJQ.val(this.getSelected());
 }
-// 返回一个日期对象的接口
+// 返回选中的日期对象
 Datepicker.prototype.getCurrentDate = function(){
 	return this.currentDate;
 }
@@ -223,4 +224,4 @@ Datepicker.prototype.render = function () {
 //=================================demo===============================================
 var start = new Date("2016-4-6");
 var end = new Date("2016-6-22");
-var calendar = new Datepicker($("#input-date")[0],start,end);
+var calendar = new Datepicker($("#input-date"),start,end);
