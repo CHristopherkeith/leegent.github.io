@@ -70,6 +70,7 @@ body{
 }
 .datepicker-day tbody{
     line-height: 25px;
+    font-family: "Microsoft Yahei";
 }
 .datepicker-day tbody:hover{
     cursor: pointer;
@@ -82,5 +83,9 @@ body{
 /*其他月份的日期*/
 .datepicker-day-previousmonth,.datepicker-day-nextmonth{
     color: gray;
+}
+/*不可选择的日期*/
+.datepicker-day-unselectable{
+    color:blue;
 }
 /**********************/
