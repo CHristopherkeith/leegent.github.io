@@ -42,12 +42,10 @@ function Datepicker(pos,target) {
     // 绑定事件：选择年份改变、选择月份改变
     this.yearSelector.bind("change",function () {
     	this.datepicker.selectedYear = $(this).val();
-    	this.datepicker.outputDate();
     	this.datepicker.render();
     });
     this.monthSelector.bind("change",function () {
     	this.datepicker.selectedMonth = $(this).val();
-    	this.datepicker.outputDate();
     	this.datepicker.render();
     });
     // datepicker DIV充当点击事件代理
