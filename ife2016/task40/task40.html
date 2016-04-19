@@ -7,9 +7,27 @@
 </head>
 <body>
 <p>Demo可选日期：2016-4-6至2016-6-22</p>
-请输入日期：<input type="text" id="input-date">
+<label>请输入日期：<input type="text" id="input-date"></label>
 <br><br>
-
+<template id="template-datepicker">
+    <div class='datepicker'>
+        <section class='datepicker-header'>
+            <div class='datepicker-arrow-left'></div>
+            <label class='datepicker-label-year'><select class='datepicker-select-year'></select> 年</label>
+            <label class='datepicker-label-month'><select class='datepicker-select-month'></select> 月</label>
+            <div class='datepicker-arrow-right'></div>
+        </section>
+        <section class='datepicker-body'>
+            <table class='datepicker-day'>
+                <thead>
+                <tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</template>
 <script src="jquery-1.12.2.min.js"></script>
 <script src="task40.js"></script>
 </body>

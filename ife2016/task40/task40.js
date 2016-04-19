@@ -1,11 +1,11 @@
 /**
  * 日历构造函数
- * @param {jQuery} targetJQ 日历输出结果的jQuery元素
+ * @param {Element} targetDOM 日历输出结果的DOM元素
  * @param {Date} startDay 可选日期的第一天
  * @param {Date} endDay 可选日期的最后一天
  */
-function Datepicker(targetJQ,startDay,endDay) {
-	this.targetJQ = targetJQ;
+function Datepicker(targetDOM,startDay,endDay) {
+	this.targetJQ = $(targetDOM);
 	this.startDay = startDay;
 	this.endDay = endDay;
     if(!this.startDay) this.startDay = new Date((this.selectedYear-1)+"-"+this.selectedMonth+"-"+this.selectedDate);
@@ -14,8 +14,8 @@ function Datepicker(targetJQ,startDay,endDay) {
     this.selectedYear = this.currentDate.getFullYear();
     this.selectedMonth = this.currentDate.getMonth() + 1;
     this.selectedDate = this.currentDate.getDate();
-    // 创建jQuery对象
-    this.JQ = $("<div class='datepicker'><section class='datepicker-header'><div class='datepicker-arrow-left'></div><label class='datepicker-label-year'><select class='datepicker-select-year'></select> 年</label><label class='datepicker-label-month'><select class='datepicker-select-month'></select> 月</label><div class='datepicker-arrow-right'></div></section><section class='datepicker-body'><table class='datepicker-day'><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody></tbody></table></section></div>").appendTo(document.body).css(
+    // 从模板创建jQuery对象
+    this.JQ = $($("#template-datepicker").html()).appendTo(document.body).css(
     	{
     		"left":this.targetJQ.offset().left+"px",
 	    	"top":this.targetJQ.offset().top
@@ -72,7 +72,7 @@ function Datepicker(targetJQ,startDay,endDay) {
     	var target = e.target || e.srcElement;
     	// 点击当月日期
     	if(target.className.indexOf("datepicker-day-selectedmonth")!=-1){
-    		this.self.selectedDate = target.dataset.date;
+    		this.self.selectedDate = target.dataset.date || target.getAttribute("data-date");
     		this.self.setCurrentDate();
     		// 向关联DOM输出日期
     		this.self.outputDate();
@@ -106,7 +106,7 @@ Datepicker.prototype.setCurrentDate = function (){
 	this.currentDate.setFullYear(this.selectedYear);
 	this.currentDate.setMonth(this.selectedMonth-1);
 	this.currentDate.setDate(this.selectedDate);
-}
+};
 /**
  * 设置选中日期的接口
  * @param {Date} obj 要设置的日期
@@ -117,27 +117,26 @@ Datepicker.prototype.setSelected = function(obj){
 	this.selectedDate = obj.getDate();
 	this.outputDate();
 	this.render();
-}
+};
 // 获取选中日期的"YYYY-mm-DD"格式字符串
 Datepicker.prototype.getSelected = function(){
 	return this.selectedYear+"-"+this.selectedMonth+"-"+this.selectedDate;
-}
+};
 // 向关联的DOM元素输出日期
 Datepicker.prototype.outputDate = function () {
 	this.targetJQ.val(this.getSelected());
-}
+};
 // 返回选中的日期对象
 Datepicker.prototype.getCurrentDate = function(){
 	return this.currentDate;
-}
+};
 /**
  * 判断一个日期是否在可选范围内
  * @param {Date} day 日期
  */
 Datepicker.prototype.isSelectable= function(day){
-	if(day - this.startDay >= 0 && day - this.endDay <= 0) return true;
-	return false; 
-}
+	return !!(day >= this.startDay && day <= this.endDay);
+};
 // 渲染年、月和日期选择页面
 Datepicker.prototype.render = function () {
 	// 渲染年月
@@ -157,7 +156,7 @@ Datepicker.prototype.render = function () {
     // 日期表格一共几行
     var lineNum = Math.ceil((lastDateOfMonths[this.selectedMonth]+firstDayOfSelectedMonth)/7);
     var dayHTML = "",
-		tmp=new Date(this.selectedYear+"-"+this.selectedMonth+"-"+1); // 用于判断日期范围的临时变量
+		tmp=new Date(this.selectedMonth+"/"+1+"/"+this.selectedYear); // 用于判断日期范围的临时变量
     var i,j,k=1; // k代表当前输出几号
     // 输出当前月份的日期前，先判断是否处于可选范围，据此输出不同的样式；在可选范围内再判断是否是当前被选中日期
     for(i=0;i<lineNum;i++){
@@ -219,9 +218,9 @@ Datepicker.prototype.render = function () {
     	dayHTML += "</tr>";
     }
     this.dates.html(dayHTML);
-}
+};
 
 //=================================demo===============================================
-var start = new Date("2016-4-6");
-var end = new Date("2016-6-22");
-var calendar = new Datepicker($("#input-date"),start,end);
+var start = new Date("4/6/2016");
+var end = new Date("6/22/2016");
+var calendar = new Datepicker(document.querySelector("#input-date"),start,end);
