@@ -1,0 +1,98 @@
+body{
+    margin:0;
+    font-size:40px;
+}
+/*日期输入框*/
+#input-date{
+    border: 1px solid #ccc;
+    padding: 4px;
+    background: url(calendar.png) no-repeat right -18px;
+}
+/*日历*/
+.datepicker{
+    display: none;
+    position: absolute;
+    width: 200px;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    user-select:none;
+    -webkit-user-select:none;
+}
+/*头部，选择年月*/
+.datepicker-header{
+    padding: 5px 5px;
+    height: 20px;
+    background-color: #00AA55;
+    font-size: 14px;
+    color: #fff;
+    line-height: 20px;
+}
+.datepicker-arrow-left{
+    float: left;
+    margin-top: 2px;
+    border-right: 10px solid #fff;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.datepicker-arrow-left:hover{
+    cursor: pointer;
+    border-right-color: #6898c2;
+}
+.datepicker-arrow-right{
+    float: right;
+    margin-top: 2px;
+    display: inline-block;
+    border-left: 10px solid #fff;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.datepicker-arrow-right:hover{
+    cursor: pointer;
+    border-left-color: #6898c2;
+}
+.datepicker-label-year{
+    float:left;
+    margin-left: 15px;
+}
+.datepicker-label-month{
+    float: left;
+    margin-left: 10px;
+}
+/*体部，选择日期*/
+.datepicker-body{
+    padding: 5px 10px;
+}
+.datepicker-day{
+    /*border-collapse: collapse;*/
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+}
+.datepicker-day thead{
+    font-family: "黑体";    
+    color: #00AA55;
+}
+.datepicker-day thead:hover{
+    cursor: default;
+}
+.datepicker-day tbody{
+    line-height: 25px;
+    font-family: "Microsoft Yahei";
+}
+.datepicker-day tbody:hover{
+    cursor: pointer;
+}
+/*特殊样式*/
+/*被选中的日期*/
+.datepicker-day-selected, .datepicker-day-selectedmonth:hover{
+    background-color: #BBFFEE !important;
+}
+/*其他月份的日期*/
+.datepicker-day-previousmonth,.datepicker-day-nextmonth{
+    color: gray;
+}
+/*不可选择的日期*/
+.datepicker-day-unselectable{
+    color:blue;
+}
+/**********************/
