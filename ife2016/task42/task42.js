@@ -1,20 +1,26 @@
 /**
- * 日历构造函数
- * @param {Element} targetDOM 日历输出结果的DOM元素（文本框）
- * @param {Date} startDay 可选日期的第一天
- * @param {Date} endDay 可选日期的最后一天
+ *
+ * @param {Object} {Element} targetDOM 日历输出结果的DOM元素（文本框）.{Date} startDay 可选日期的第一天,{Date} endDay 可选日期的最后一天, {Boolean} multiselect 是否选择时间段
  */
-function Datepicker(targetDOM,startDay,endDay) {
-	this.targetJQ = $(targetDOM);
+/**
+ * @description 日历构造函数
+ * @param obj
+ * @constructor
+ */
+function Datepicker(obj) {
+	this.targetJQ = $(obj.targetDOM);
+    // 将关联文本框指回来
     this.targetJQ[0].datepicker = this;
-	this.startDay = startDay;
-	this.endDay = endDay;
-    if(!this.startDay) this.startDay = new Date((this.selectedYear-1)+"-"+this.selectedMonth+"-"+this.selectedDate);
-    if(!this.endDay) this.endDay = new Date((this.selectedYear+1)+"-"+this.selectedMonth+"-"+this.selectedDate);
+	this.startDay = obj.startDay;
+	this.endDay = obj.endDay;
+    this.multiselect = obj.multiselect || false;
+
     this.currentDate = new Date();
     this.selectedYear = this.currentDate.getFullYear();
     this.selectedMonth = this.currentDate.getMonth() + 1;
     this.selectedDate = this.currentDate.getDate();
+    if(!this.startDay) this.startDay = new Date(this.selectedMonth+"/"+this.selectedDate+"/"+(this.selectedYear-1));
+    if(!this.endDay) this.endDay = new Date(this.selectedMonth+"/"+this.selectedDate+"/"+(this.selectedYear+1));
     // 选择日期后的回调函数
     this.callback = null;
     // 从模板创建jQuery对象
@@ -183,15 +189,15 @@ Datepicker.prototype.render = function () {
         tmp.setDate(k);
         if (this.isSelectable(tmp)) {
             // 用data-date自定义属性存储日期，可以用dataset来取
-            if (k == this.selectedDate) $(this.dates[i]).removeClass().addClass("datepicker-day-selected datepicker-day-currentmonth").attr("data-date", k).html(k);
-            else $(this.dates[i]).removeClass().addClass("datepicker-day-currentmonth").attr("data-date", k).html(k);
+            $(this.dates[i]).removeClass().addClass("datepicker-day-currentmonth").attr("data-date", k).html(k);
+            if (k == this.selectedDate) $(this.dates[i]).addClass("datepicker-day-selected");
         }
         else {
             $(this.dates[i]).removeClass().addClass('datepicker-day-unselectable').html(k);
         }
     }
     // 输出下个月的日期
-    for(k=1;i<42;k++,i++) {
+    for(k=1;i<this.dates.length;k++,i++) {
         $(this.dates[i]).removeClass().addClass('datepicker-day-nextmonth').html(k);
     }
 };
@@ -202,7 +208,12 @@ Datepicker.prototype.setCallback = function(cb){
 //=================================demo===============================================
 var start = new Date("4/6/2016");
 var end = new Date("6/22/2016");
-var calendar = new Datepicker(document.querySelector("#input-date"),start,end);
+var obj = {
+    targetDOM:document.querySelector("#input-date"),
+    startDay:start,
+    endDay:end
+}
+var calendar = new Datepicker(obj);
 calendar.setCallback(function () {
     var date = this.getSelected();
     alert("你选择了日期 "+date);
