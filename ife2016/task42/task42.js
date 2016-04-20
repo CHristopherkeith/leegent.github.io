@@ -33,8 +33,8 @@ function Datepicker(targetDOM,startDay,endDay) {
 	    );
     // 将DOM对象指回自身
     this.JQ[0].self = this;
-    // 表格tbody（日期部分）
-    this.dates = this.JQ.find("tbody");
+    // 日期部分单元格的数组
+    this.dates = this.JQ.find("td");
     // 缓存年月下拉框
     this.yearSelector = this.JQ.find(".datepicker-select-year");
     this.monthSelector = this.JQ.find(".datepicker-select-month");
@@ -80,7 +80,7 @@ function Datepicker(targetDOM,startDay,endDay) {
     	var target = e.target || e.srcElement;
         var isValidClick = false;
     	// 点击当月可选日期
-    	if(target.className.indexOf("datepicker-day-selectedmonth")!=-1){
+    	if(target.className.indexOf("datepicker-day-currentmonth")!=-1){
     		this.self.selectedDate = target.dataset.date;
             isValidClick = true;
     		// 向关联文本框输出日期
@@ -109,7 +109,6 @@ function Datepicker(targetDOM,startDay,endDay) {
     		}
     		else this.self.selectedMonth ++;
             isValidClick = true;
-
     	}
         if(isValidClick) {
             this.self.setCurrentDate();
@@ -118,7 +117,7 @@ function Datepicker(targetDOM,startDay,endDay) {
         }
     });
 }
-// 设置当前日期
+// 设置当前日期对象
 Datepicker.prototype.setCurrentDate = function (){
 	this.currentDate.setFullYear(this.selectedYear);
 	this.currentDate.setMonth(this.selectedMonth-1);
@@ -167,73 +166,34 @@ Datepicker.prototype.render = function () {
 		else return 28;
     })();
     var lastDateOfMonths = [0,31,FebLastDay,31,30,31,30,31,31,30,31,30,31];
-    // 向日期表格添加日期 
-    // 获得本月1号是星期几
-    var firstDayOfSelectedMonth = (this.currentDate.getDay() - (this.currentDate.getDate() % 7 -1) +7) %7;
-    // 日期表格一共几行
-    var lineNum = Math.ceil((lastDateOfMonths[this.selectedMonth]+firstDayOfSelectedMonth)/7);
-    var dayHTML = "",
-		tmp=new Date(this.selectedMonth+"/"+1+"/"+this.selectedYear); // 用于判断日期范围的临时变量
-    var i,j,k=1; // k代表当前输出几号
-    // 输出当前月份的日期前，先判断是否处于可选范围，据此输出不同的样式；在可选范围内再判断是否是当前被选中日期
-    for(i=0;i<lineNum;i++){
-    	dayHTML +="<tr>";
-		// 首行输出上个月最后几天
-    	if(i==0){
-    		for(j=0;j<firstDayOfSelectedMonth;j++){
-    			dayHTML += "<td class='datepicker-day-previousmonth'>" 
-		    			// 先-1变成0——11，模12，然后-1表示上个月，+12再%12表示12月到1月循环，最后+1变回1——12月
-		    			+ (lastDateOfMonths[(this.selectedMonth-1-1+12)%12+1] - firstDayOfSelectedMonth + 1 + j)
-		    			+ "</td>";
-    		}
-    		// 再输出本月的头几天
-    		for(;j<7;j++,k++){
-    			tmp.setDate(k);
-    			if(this.isSelectable(tmp)){
-	    			// 用data-date自定义属性存储日期，可以用dataset来取
-	    			if(k==this.selectedDate)  dayHTML += "<td class='datepicker-day-selected datepicker-day-selectedmonth'  data-date="+k+">"+ k +"</td>";
-	    			else dayHTML+="<td class='datepicker-day-selectedmonth' data-date="+k+">"+ k +"</td>";
-    			}
-    			else{
-    				dayHTML += "<td class='datepicker-day-unselectable' data-date="+k+">"+ k +"</td>";
-    			}
-    		}
-    	}
-    	// 最后一行输出下个月的头几天
-    	else if(i==lineNum-1){
-    		for(j=0;j<lastDateOfMonths[this.selectedMonth]-k+1;j++,k++){
-    			tmp.setDate(k);
-    			if(this.isSelectable(tmp)){
-	    			// 用data-date自定义属性存储日期，可以用dataset来取
-	    			if(k==this.selectedDate)  dayHTML += "<td class='datepicker-day-selected datepicker-day-selectedmonth'  data-date="+k+">"+ k +"</td>";
-	    			else dayHTML+="<td class='datepicker-day-selectedmonth' data-date="+k+">"+ k +"</td>";
-    			}
-    			else{
-    				dayHTML += "<td class='datepicker-day-unselectable' data-date="+k+">"+ k +"</td>";
-    			}
-    		}
-    		for(k=1;j<7;j++,k++){
-    			dayHTML += "<td class='datepicker-day-nextmonth'>" + k + "</td>";
-    		}
-    	}
-    	// 普通行
-    	else{
-    		for(j=0;j<7;j++,k++){
-				tmp.setDate(k);
-    			if(this.isSelectable(tmp)){
-	    			// 用data-date自定义属性存储日期，可以用dataset来取
-	    			if(k==this.selectedDate)  dayHTML += "<td class='datepicker-day-selected datepicker-day-selectedmonth'  data-date="+k+">"+ k +"</td>";
-	    			else dayHTML+="<td class='datepicker-day-selectedmonth' data-date="+k+">"+ k +"</td>";
-    			}
-    			else{
-    				dayHTML += "<td class='datepicker-day-unselectable' data-date="+k+">"+ k +"</td>";
-    			}
-    		}
-    	}
-    	// 行末
-    	dayHTML += "</tr>";
+    // 向日期表格添加日期
+    // 获得本月1号是星期几，也等于要输出的上个月最后几天的天数
+    var firstDayOfCurrentMonth = (this.currentDate.getDay() - (this.currentDate.getDate() % 7 -1) +7) %7;
+    // 用于判断日期范围的临时变量
+    var tmp=new Date(this.selectedMonth+"/"+1+"/"+this.selectedYear);
+    var i,k; // k代表当前输出几号
+    // 计算开头要输出几格上个月的日期。 先-1变成0——11，模12，然后-1表示上个月，+12再%12表示12月到1月循环，最后+1变回1——12月
+    var lastMonth = (this.selectedMonth-1-1+12)%12+1;
+    // 输出上个月的日期
+    for(i=0,k=lastDateOfMonths[lastMonth] - firstDayOfCurrentMonth + 1;i<firstDayOfCurrentMonth;k++,i++){
+        $(this.dates[i]).removeClass().addClass("datepicker-day-previousmonth").html(k);
     }
-    this.dates.html(dayHTML);
+    // 输出当前月份的日期。先判断是否处于可选范围，据此输出不同的样式；在可选范围内再判断是否是当前被选中日期
+    for(k=1;k<= lastDateOfMonths[this.selectedMonth];k++,i++) {
+        tmp.setDate(k);
+        if (this.isSelectable(tmp)) {
+            // 用data-date自定义属性存储日期，可以用dataset来取
+            if (k == this.selectedDate) $(this.dates[i]).removeClass().addClass("datepicker-day-selected datepicker-day-currentmonth").attr("data-date", k).html(k);
+            else $(this.dates[i]).removeClass().addClass("datepicker-day-currentmonth").attr("data-date", k).html(k);
+        }
+        else {
+            $(this.dates[i]).removeClass().addClass('datepicker-day-unselectable').html(k);
+        }
+    }
+    // 输出下个月的日期
+    for(k=1;i<42;k++,i++) {
+        $(this.dates[i]).removeClass().addClass('datepicker-day-nextmonth').html(k);
+    }
 };
 // 设置选择日期后的回调函数
 Datepicker.prototype.setCallback = function(cb){

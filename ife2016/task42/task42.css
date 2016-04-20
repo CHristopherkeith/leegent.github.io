@@ -84,7 +84,7 @@ body{
 }
 /*特殊样式*/
 /*被选中的日期*/
-.datepicker-day-selected, .datepicker-day-selectedmonth:hover{
+.datepicker-day-selected, .datepicker-day-currentmonth:hover{
     background-color: #BBFFEE !important;
 }
 /*其他月份的日期*/
