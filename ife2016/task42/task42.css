@@ -1,11 +1,13 @@
 body{
     margin:0;
-    font-size:40px;
+    font-size:20px;
+    text-align: center;
 }
 /*日期输入框*/
 #input-date{
     border: 1px solid #ccc;
     padding: 4px;
+    width: 15em;
     background: url(calendar.png) no-repeat right -18px;
 }
 /*日历*/
@@ -93,6 +95,10 @@ body{
 }
 /*不可选择的日期*/
 .datepicker-day-unselectable{
-    color:blue;
+    color:red;
+}
+/*时间段内的日期*/
+.datepicker-day-timeSegment{
+    color:royalblue;
 }
 /**********************/
