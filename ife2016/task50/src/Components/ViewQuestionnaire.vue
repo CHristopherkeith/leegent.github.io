@@ -6,9 +6,9 @@
 				<div class="view-question-area-desc">
 					<span class="view-question-required">{{ question.required?"*":"&nbsp;" }}</span>Q{{ question.order }}&nbsp;({{ question.qtype | qTypeFormat }}){{ question.stem }}
                 </div>
-                <div class="view-question-area-option">
+                <div>
 	                <textarea class="view-question-textarea" v-if="question.qtype === 'text'" v-model="resp[question.order-1]"></textarea>
-	                <ul v-else>
+	                <ul v-else class="view-question-options">
 	                	<li v-for="option in question.options">
 	                		<label><input type="{{ question.qtype=='single'?'radio':'checkbox' }}" :name="question.order" :value="option.id" v-model="resp[question.order-1]">{{ option.content }}</label>
 	                	</li>
@@ -89,20 +89,11 @@
     @border-style: 1px solid #000;
     .view-header {
         position: relative;
-        padding: 10px 10px 10px 10px;
-        // border-bottom: @border-style;
-        font-size: 30px;
         font-family: "黑体";
         text-align: center;
     }
 
-    .view-main {
-        padding: 20px;
-        min-height: 135px;
-    }
-
     .view-question {
-	    padding: 1em;
     	-webkit-user-select: none;
     	user-select: none;
     	cursor: default;
@@ -116,29 +107,79 @@
       font-family: "黑体";
     }
 
-    .view-question-area-option {
-        min-height: 1em;
-        ul{
-        	list-style: none;
-        	font-size: 14px;
-        	font-family: "Microsoft YaHei UI";
-        	li{
-        		display: inline-block;
-        		margin-right: 2em;
-        	}
-        }
-    }
-
-    .view-question-textarea{
-    	margin-left: 2.5em;
-    	width: 40em;
-    	height: 5em;
+    .view-question-options {
+    	list-style: none;
+    	font-family: "Microsoft YaHei UI";
+    	li{
+    		display: inline-block;
+    	}
     }
 
     .view-footer {
       position: relative;
-      padding: 20px 80px 20px 80px;
       text-align: center;
+    }
+
+    @media (min-width:421px){
+        .view-header{
+            padding: .625em;
+            font-size: 1.875em;
+        }
+
+        .view-main {
+            padding: 1.25em;
+        }
+
+        .view-question{
+            padding: 1em;            
+        }
+
+        .view-question-options{
+            font-size: .875em;
+            li{
+                display: inline-block;
+                margin-right: 2em;
+            }
+        }
+
+        .view-question-textarea{
+            margin-left: 2.5em;
+            width: 40em;
+            height: 5em;
+        }
+
+        .view-footer{
+            padding: 1.25em 5em;
+        }
+    }
+
+    @media (max-width:420px){
+        .view-header{
+            padding: .225em;
+            font-size: 1.25em;
+        }
+
+        .view-main {
+            padding: .25em;
+        }
+
+        .view-question-options{
+            font-size: .875em;
+            li{
+                display: inline-block;
+                margin-right: .5em;
+            }
+        }
+
+        .view-question-textarea{
+            margin: 0 5% 0 5%;
+            width: 90%;
+            height: 5em;
+        }
+
+        .view-footer{
+            padding: .25em 1em;
+        }
     }
 
 </style>
