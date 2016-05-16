@@ -47,6 +47,7 @@
         box-shadow: 2px 2px 3px #aaa;
     }
 
+    @media (min-width:421px){
         #wrapper{
             padding-bottom: 100px;
         }
@@ -58,6 +59,7 @@
         }
     }
 
+    @media (max-width:420px){
         #container{
             padding: 3px;
         }
