@@ -47,7 +47,6 @@
         box-shadow: 2px 2px 3px #aaa;
     }
 
-    @media screen and (min-width:421px){
         #wrapper{
             padding-bottom: 100px;
         }
@@ -59,7 +58,6 @@
         }
     }
 
-    @media screen and (max-width:420px){
         #container{
             padding: 3px;
         }
