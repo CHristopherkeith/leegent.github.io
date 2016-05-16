@@ -110,9 +110,6 @@
     .view-question-options {
     	list-style: none;
     	font-family: "Microsoft YaHei UI";
-    	li{
-    		display: inline-block;
-    	}
     }
 
     .view-footer {
@@ -137,6 +134,7 @@
         .view-question-options{
             font-size: .875em;
             li{
+                display: inline-block;
                 margin-right: 2em;
             }
         }
@@ -163,10 +161,18 @@
         }
 
         .view-question-options{
-            font-size: 1em;
+            font-size: 1.25em;
             padding:0 .5em 0 .5em;
             li{
-                margin-right: .5em;
+                display: block;
+                background-color: #eff;
+                border-bottom: 1px solid #fff;
+                label{
+                    display: block;
+                    &:hover{
+                        background-color: @hover-color;
+                    }
+                }
             }
         }
 
