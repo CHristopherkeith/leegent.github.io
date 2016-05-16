@@ -34,24 +34,34 @@
     }
 
     body {
+        font-size:16px;
         margin: 0;
         height: 100%;
         background-color: #efefef;
     }
 
-    #wrapper{
-        padding-bottom: 100px;
-    }
-
     #container {
         position: relative;
-        top: 50px;
-        margin: 0 10% 0 10%;
-        padding: 10px 10px 10px 10px;
-        width: 80%;
-        min-width: 600px;
         min-height: 300px;
         background-color: #fff;
         box-shadow: 2px 2px 3px #aaa;
+    }
+
+    @media screen and (min-width:421px){
+        #wrapper{
+            padding-bottom: 100px;
+        }
+        #container{
+            margin: 0 10% 0 10%;
+            top: 3em;
+            padding: 10px;
+            width: 80%;
+        }
+    }
+
+    @media screen and (max-width:420px){
+        #container{
+            padding: 3px;
+        }
     }
 </style>
