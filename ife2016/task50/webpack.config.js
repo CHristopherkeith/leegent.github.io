@@ -20,6 +20,8 @@ module.exports = {
         ]
     },
     resolve: {
+        //查找module的话从这里开始查找
+        root: 'C:/User/Leegent/Documents/leegent.github.io/ife2016/task50', //绝对路径
         // require时省略的扩展名，如：require('module') 不需要module.js
         extensions: ['', '.js', '.vue']
     }
