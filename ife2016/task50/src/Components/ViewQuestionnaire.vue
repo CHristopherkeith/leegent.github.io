@@ -137,7 +137,6 @@
         .view-question-options{
             font-size: .875em;
             li{
-                display: inline-block;
                 margin-right: 2em;
             }
         }
@@ -164,9 +163,9 @@
         }
 
         .view-question-options{
-            font-size: .875em;
+            font-size: 1em;
+            padding:0 .5em 0 .5em;
             li{
-                display: inline-block;
                 margin-right: .5em;
             }
         }
