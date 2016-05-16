@@ -8,7 +8,7 @@
  * @constructor
  */
 function Datepicker(obj) {
-    this.targetJQ = $(obj.targetDOM);
+    var targetJQ = $(obj.targetDOM);
     // 将关联文本框指回来
     this.targetJQ[0].datepicker = this;
     this.startDay = obj.startDay;
@@ -133,7 +133,6 @@ function Datepicker(obj) {
         }
         // 点击当月可选日期
         else if (target.className.indexOf("datepicker-day-currentmonth") != -1) {
-            // 多选模式交给专门的函数处理
             if (this.self.isMultiselect) {
                 this.self.clickMulti(target.dataset.date);
             }
