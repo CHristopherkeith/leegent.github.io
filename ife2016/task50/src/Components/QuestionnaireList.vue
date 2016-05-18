@@ -11,27 +11,25 @@
             <th><span>操作</span><a class="button-create" @click="createQues">┼&nbsp;新建问卷</a></th>
         </tr>
         </thead>
-        <template v-for="ques in qList">
-            <tr class="questionair-list-rows">
-                <td class="questionair-list-first-column"><input type="checkbox" name="questionaire" v-bind:value="ques.id" v-model="checkedQues"></td>
-                <td>{{ ques.title }}</td>
-                <td>{{ ques.releaseDate | pureDate }}</td>
-                <td>{{ ques.state === 'draft'? null : ques.deadline | pureDate }}</td>
-                <td class="questionaire-state-{{ ques.state }}">{{ ques.state | qStateFormat }}</td>
-                <td v-if="ques.state === 'draft'" class="questionaire-list-last-column">
-                    <a class="button-in-table" v-link="{name:'editques',params:{user:1,qid:ques.id}}">编辑</a><a class="button-in-table" @click="deleteQues(ques.id,ques.title)">删除</a><a class="button-in-table" v-link="{name:'viewques',params:{user:1,qid:ques.id}}">查看问卷</a>
-                </td>
-                <td v-else class="questionaire-list-last-column">
-                    <a class="button-in-table" v-link="{name:'viewques',params:{user:1,qid:ques.id}}">查看问卷</a><a class="button-in-table" v-link="{name:'viewcharts',params:{user:1,qid:ques.id}}">查看数据</a>
-                </td>
-            </tr>G
-        </template>
+        <tr class="questionair-list-rows" v-for="ques in qList">
+            <td class="questionair-list-first-column"><input type="checkbox" name="questionaire" v-bind:value="ques.id" v-model="checkedQues"></td>
+            <td>{{ ques.title }}</td>
+            <td>{{ ques.releaseDate | pureDate }}</td>
+            <td>{{ ques.state === 'draft'? null : ques.deadline | pureDate }}</td>
+            <td class="questionaire-state-{{ ques.state }}">{{ ques.state | qStateFormat }}</td>
+            <td v-if="ques.state === 'draft'" class="questionaire-list-last-column">
+                <a class="button-in-table" v-link="{name:'editques',params:{user:1,qid:ques.id}}">编辑</a><a class="button-in-table" @click="deleteQues(ques.id,ques.title)">删除</a><a class="button-in-table" v-link="{name:'viewques',params:{user:1,qid:ques.id}}">查看问卷</a>
+            </td>
+            <td v-else class="questionaire-list-last-column">
+                <a class="button-in-table" v-link="{name:'viewques',params:{user:1,qid:ques.id}}">查看问卷</a><a class="button-in-table" v-link="{name:'viewcharts',params:{user:1,qid:ques.id}}">查看数据</a>
+            </td>
+        </tr>
         <tr class="questionair-list-lastrow">
             <td class="questionair-list-first-column"><label><input type="checkbox" v-model="checkedAll" @change="checkAll">全选</label></td>
             <td colspan="5"><a class="button-in-table" @click="batchDelete">批量删除</a> </td>
         </tr>
-        </table>
-    <a v-else class = "button-big-create" @click="createQues">┼&nbsp;新建问卷</a>
+    </table>
+    <a class = "button-big-create" @click="createQues" v-else>┼&nbsp;新建问卷</a>
 </template>
 
 <script>

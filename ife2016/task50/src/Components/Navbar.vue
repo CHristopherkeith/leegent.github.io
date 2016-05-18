@@ -3,7 +3,7 @@
  */
 <template>
     <header class='navbar'>
-        <div class='navbar-maintitle'>问卷管理</div>
+        <div class='navbar-maintitle' v-link="'/'">问卷管理</div>
         <div class='navbar-subtitle' v-link="'/'">我的问卷</div>
     </header>
 </template>
@@ -32,14 +32,14 @@
         font-size: @fsize;
         font-family: "黑体";
         font-weight: @fweight;
+        cursor:pointer;
+        -webkit-user-select:none;
+        user-select:none;
     }
     .navbar-maintitle{
         .navbar-title;
     }
     .navbar-subtitle{
         .navbar-title(14px;normal;10em);
-        cursor:pointer;
-        -webkit-user-select:none;
-        user-select:none;
     }
 </style>

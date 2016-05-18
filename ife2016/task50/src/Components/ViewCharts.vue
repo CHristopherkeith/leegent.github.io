@@ -132,8 +132,16 @@ export default{
 </script>
 
 <style>
-	.view-question-chart{
-		width: 600px;
-		height: 400px;
+	@media (min-width:421px){
+		.view-question-chart{
+			width: 600px;
+			height: 400px;
+		}
+	}
+	@media (max-width:420px){
+		.view-question-chart{
+			width: 100%;
+			height: 200px;
+		}
 	}
 </style>

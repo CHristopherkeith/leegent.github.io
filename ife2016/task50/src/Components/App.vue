@@ -56,6 +56,7 @@
             top: 3em;
             padding: 10px;
             width: 80%;
+            min-width: 1200px;
         }
     }
 
